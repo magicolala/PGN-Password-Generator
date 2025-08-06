@@ -269,6 +269,39 @@
         margin: 0;
         font-size: 0.9em;
     }
+    
+    .discrete-mode {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .discrete-mode label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 0.95em;
+    }
+    
+    .discrete-mode input[type="checkbox"] {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+    
+    .password-hidden {
+        filter: blur(8px);
+        user-select: none;
+        pointer-events: none;
+    }
+    
+    .hidden-message {
+        color: #008793;
+        font-style: italic;
+        font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
@@ -279,6 +312,13 @@
       <div class="slider-container">
         <p>Password Length: <span id="length-label">16</span></p>
         <input type="range" id="length" min="8" max="32" value="16">
+      </div>
+      <div class="discrete-mode">
+        <label>
+          <input type="checkbox" id="discrete-mode"> 
+          <i class="fas fa-eye-slash"></i> 
+          Mode discret (masquer le mot de passe)
+        </label>
       </div>
       <button class="generate-btn" onclick="generate()">
         <i class="fas fa-rocket"></i> Generate
@@ -383,6 +423,7 @@
           <li><strong>Longueur</strong> : 16+ caractères recommandés pour une sécurité optimale</li>
           <li><strong>Reproductibilité</strong> : La même partie génère toujours le même mot de passe</li>
           <li><strong>Variantes</strong> : Changez quelques coups pour créer des mots de passe différents</li>
+          <li><strong>Mode discret</strong> : Cochez la case pour masquer le mot de passe généré (utile en public)</li>
         </ul>
         <div class="security-tip">
           <p><i class="fas fa-exclamation-triangle"></i> Important : Gardez vos PGN en sécurité, ils sont la clé de vos mots de passe !</p>
@@ -398,6 +439,7 @@
     let board = null;
     let gameHistory = [];
     let currentMoveIndex = -1;
+    let generatedPassword = '';
     
     document.getElementById('length').addEventListener('input', function() {
       document.getElementById('length-label').innerText = this.value;
@@ -415,13 +457,26 @@
       const movesOnly = pgnText.replace(unwantedPartsRegex, '').replace(/\s+/g, ' ').trim();
 
       const password = await generateSecurePasswordFromPGN(movesOnly, length);
-      document.getElementById('password-text').innerText = password;
+      generatedPassword = password; // Stocker le mot de passe pour la copie
+      
+      const isDiscreteMode = document.getElementById('discrete-mode').checked;
+      const passwordElement = document.getElementById('password-text');
+      
+      if (isDiscreteMode) {
+        passwordElement.innerHTML = '<span class="hidden-message"><i class="fas fa-lock"></i> Mot de passe généré (masqué pour sécurité)</span>';
+        passwordElement.classList.add('password-hidden');
+      } else {
+        passwordElement.innerText = password;
+        passwordElement.classList.remove('password-hidden');
+      }
+      
       document.getElementById('password-container').classList.add('show');
     }
 
     function copyPassword() {
-      const passwordText = document.getElementById('password-text').innerText;
-      navigator.clipboard.writeText(passwordText).then(() => {
+      // Utiliser le mot de passe stocké plutôt que le texte affiché
+      const passwordToCopy = generatedPassword || document.getElementById('password-text').innerText;
+      navigator.clipboard.writeText(passwordToCopy).then(() => {
         const toast = document.getElementById('toast');
         toast.classList.add('show');
         setTimeout(() => {
