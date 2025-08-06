@@ -15,11 +15,10 @@
       font-family: 'Montserrat', sans-serif;
       background: 
         linear-gradient(-45deg, rgba(5, 25, 55, 0.8), rgba(0, 77, 122, 0.8), rgba(0, 135, 147, 0.8), rgba(0, 191, 114, 0.8), rgba(168, 235, 18, 0.8)),
-        url('https://images.unsplash.com/photo-1499088513455-78ed88b7a5b4?q=80&w=1978&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        url('https://images.unsplash.com/photo-1528819622765-d6bcf132f793?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
       background-size: 400% 400%, cover;
-      background-position: center, center;
+      background-position: 100% 50%, center;
       background-attachment: fixed;
-      animation: gradientShift 15s ease-in-out infinite;
       color: #fff;
       display: flex;
       justify-content: center;
@@ -28,17 +27,7 @@
       padding: 20px;
     }
     
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
+
     .container {
       width: 100%;
       max-width: 1200px;
@@ -755,6 +744,15 @@
         updateMoveInfo();
       }
     }
+
+    // Animation de background au scroll
+    function updateBackgroundOnScroll() {
+      const scrollPercent = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
+      const gradientPosition = (1 - scrollPercent) * 100;
+      document.body.style.backgroundPosition = `${gradientPosition}% 50%, center`;
+    }
+
+    window.addEventListener('scroll', updateBackgroundOnScroll);
 
     // Initialiser le board au chargement de la page
     $(document).ready(function() {
