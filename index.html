@@ -3,356 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>PGN to Secure Password</title>
+  
+  <!-- External Libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: 
-        linear-gradient(-45deg, rgba(5, 25, 55, 0.8), rgba(0, 77, 122, 0.8), rgba(0, 135, 147, 0.8), rgba(0, 191, 114, 0.8), rgba(168, 235, 18, 0.8)),
-        url('https://images.unsplash.com/photo-1528819622765-d6bcf132f793?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-      background-size: 400% 400%, cover;
-      background-position: 100% 50%, center;
-      background-attachment: fixed;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      backdrop-filter: blur(14px) saturate(172%);
-      -webkit-backdrop-filter: blur(14px) saturate(172%);
-      background: rgba(5, 25, 55, 0.25);
-      padding: 40px;
-      border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    
-    .main-content {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-    
-    .left-panel {
-      flex: 1;
-      min-width: 0;
-    }
-    
-    .right-panel {
-      flex: 1;
-      min-width: 0;
-    }
-    
-    @media (max-width: 768px) {
-      .main-content {
-        flex-direction: column;
-        gap: 20px;
-      }
-    }
-    h1 {
-      font-size: 2.5em;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 15px rgba(168, 235, 18, 0.3);
-    }
-    textarea {
-      width: 100%;
-      height: 150px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      padding: 15px;
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
-      color: #fff;
-      resize: vertical;
-    }
-    textarea::placeholder {
-        color: rgba(255, 255, 255, 0.6);
-    }
-    .controls {
-        margin-top: 25px;
-    }
-    .slider-container p {
-        font-size: 1.1em;
-        margin-bottom: 10px;
-    }
-    #length-label {
-        font-weight: bold;
-    }
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 10px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 5px;
-      outline: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background: #a8eb12;
-      cursor: pointer;
-      border-radius: 50%;
-    }
-    .generate-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-top: 30px;
-      background: #a8eb12;
-      color: #051937;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.2em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .generate-btn:hover {
-      background: #00bf72;
-    }
-    #password-container {
-      display: none;
-      flex-direction: column;
-      margin-top: 30px;
-    }
-    #password-container.show {
-        display: flex;
-    }
-    .password-display {
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      background: rgba(0, 191, 114, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 20px;
-      border-radius: 8px;
-      word-break: break-all;
-      font-size: 2em;
-      text-align: center;
-      position: relative;
-    }
-    .copy-btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background: transparent;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        font-size: 1.2em;
-        opacity: 0.6;
-        transition: opacity 0.3s;
-    }
-    .copy-btn:hover {
-        opacity: 1;
-    }
-    .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #a8eb12;
-        color: #051937;
-        padding: 10px 20px;
-        border-radius: 5px;
-        opacity: 0;
-        transition: opacity 0.5s;
-        pointer-events: none;
-    }
-    .toast.show {
-        opacity: 1;
-    }
-    
-    .chess-section {
-        padding: 20px;
-        backdrop-filter: blur(10px) saturate(150%);
-        -webkit-backdrop-filter: blur(10px) saturate(150%);
-        background: rgba(0, 135, 147, 0.15);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        height: fit-content;
-    }
-    
-    .chess-controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-        justify-content: center;
-    }
-    
-    .chess-btn {
-        padding: 8px 16px;
-        background: #008793;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 0.9em;
-        transition: background-color 0.3s;
-    }
-    
-    .chess-btn:hover {
-        background: #00bf72;
-    }
-    
-    #chessboard {
-        margin: 0 auto;
-        max-width: 100%;
-        width: 100%;
-    }
-    
-    .board-container {
-        text-align: center;
-    }
-    
-    h2 {
-        text-align: center;
-        margin-bottom: 15px;
-        font-size: 1.5em;
-        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6), 0 0 10px rgba(0, 191, 114, 0.3);
-    }
-    
-    .move-navigation {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    
-    .move-navigation p {
-        margin-bottom: 10px;
-        font-size: 1em;
-    }
-    
-    .nav-controls {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-        flex-wrap: wrap;
-    }
-    
-    .instructions-section {
-        margin-top: 30px;
-        padding: 20px;
-        backdrop-filter: blur(10px) saturate(150%);
-        -webkit-backdrop-filter: blur(10px) saturate(150%);
-        background: rgba(168, 235, 18, 0.1);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-left: 4px solid #a8eb12;
-    }
-    
-    .instructions-section h3 {
-        color: #a8eb12;
-        margin-bottom: 15px;
-        font-size: 1.3em;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(168, 235, 18, 0.4);
-    }
-    
-    .instruction-item {
-        margin-bottom: 15px;
-        padding: 10px;
-        backdrop-filter: blur(8px) saturate(120%);
-        -webkit-backdrop-filter: blur(8px) saturate(120%);
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 5px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-left: 2px solid #008793;
-    }
-    
-    .instruction-item h4 {
-        color: #00bf72;
-        margin-bottom: 5px;
-        font-size: 1.1em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0 0 6px rgba(0, 191, 114, 0.3);
-    }
-    
-    .instruction-item p {
-        margin-bottom: 8px;
-        line-height: 1.4;
-        font-size: 0.95em;
-    }
-    
-    .instruction-item ul {
-        margin-left: 20px;
-        margin-top: 5px;
-    }
-    
-    .instruction-item li {
-        margin-bottom: 3px;
-        font-size: 0.9em;
-    }
-    
-    .security-tip {
-        background: rgba(168, 235, 18, 0.1);
-        border-left: 2px solid #a8eb12;
-        padding: 10px;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-    
-    .security-tip p {
-        color: #a8eb12;
-        font-weight: bold;
-        margin: 0;
-        font-size: 0.9em;
-    }
-    
-    .discrete-mode {
-        margin-top: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        justify-content: center;
-    }
-    
-    .discrete-mode label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        font-size: 0.95em;
-    }
-    
-    .discrete-mode input[type="checkbox"] {
-        transform: scale(1.2);
-        cursor: pointer;
-    }
-    
-    .password-hidden {
-        filter: blur(8px);
-        user-select: none;
-        pointer-events: none;
-    }
-    
-    .hidden-message {
-        color: #008793;
-        font-style: italic;
-        font-size: 1.2em;
-    }
-  </style>
+  
+  <!-- Local Styles -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="container">
@@ -390,42 +48,42 @@
       
       <div class="right-panel">
         <div class="chess-section">
-      <h2><i class="fas fa-chess"></i> Chess Board</h2>
-      <div class="chess-controls">
-        <button class="chess-btn" onclick="loadPgnToBoard()">
-          <i class="fas fa-upload"></i> Load PGN to Board
-        </button>
-        <button class="chess-btn" onclick="clearBoard()">
-          <i class="fas fa-trash"></i> Clear Board
-        </button>
-        <button class="chess-btn" onclick="resetBoard()">
-          <i class="fas fa-undo"></i> Reset Board
-        </button>
-        <button class="chess-btn" onclick="flipBoard()">
-          <i class="fas fa-sync-alt"></i> Flip Board
-        </button>
-      </div>
-      
-      <div class="move-navigation">
-        <p><strong>Move Navigation:</strong> <span id="move-info">Position initiale</span></p>
-        <div class="nav-controls">
-          <button class="chess-btn" onclick="goToStart()">
-            <i class="fas fa-fast-backward"></i> Start
-          </button>
-          <button class="chess-btn" onclick="previousMove()">
-            <i class="fas fa-step-backward"></i> Previous
-          </button>
-          <button class="chess-btn" onclick="nextMove()">
-            <i class="fas fa-step-forward"></i> Next
-          </button>
-          <button class="chess-btn" onclick="goToEnd()">
-            <i class="fas fa-fast-forward"></i> End
-          </button>
-        </div>
-      </div>
-      <div class="board-container">
-        <div id="chessboard"></div>
-      </div>
+          <h2><i class="fas fa-chess"></i> Chess Board</h2>
+          <div class="chess-controls">
+            <button class="chess-btn" onclick="loadPgnToBoard()">
+              <i class="fas fa-upload"></i> Load PGN to Board
+            </button>
+            <button class="chess-btn" onclick="clearBoard()">
+              <i class="fas fa-trash"></i> Clear Board
+            </button>
+            <button class="chess-btn" onclick="resetBoard()">
+              <i class="fas fa-undo"></i> Reset Board
+            </button>
+            <button class="chess-btn" onclick="flipBoard()">
+              <i class="fas fa-sync-alt"></i> Flip Board
+            </button>
+          </div>
+          
+          <div class="move-navigation">
+            <p><strong>Move Navigation:</strong> <span id="move-info">Position initiale</span></p>
+            <div class="nav-controls">
+              <button class="chess-btn" onclick="goToStart()">
+                <i class="fas fa-fast-backward"></i> Start
+              </button>
+              <button class="chess-btn" onclick="previousMove()">
+                <i class="fas fa-step-backward"></i> Previous
+              </button>
+              <button class="chess-btn" onclick="nextMove()">
+                <i class="fas fa-step-forward"></i> Next
+              </button>
+              <button class="chess-btn" onclick="goToEnd()">
+                <i class="fas fa-fast-forward"></i> End
+              </button>
+            </div>
+          </div>
+          <div class="board-container">
+            <div id="chessboard"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -465,300 +123,46 @@
 
       <div class="instruction-item">
         <h4><i class="fas fa-eye"></i> Navigation dans une partie</h4>
-        <p>Pour analyser une partie coup par coup :</p>
+        <p>Une fois qu'une partie est chargée sur le board :</p>
         <ul>
-          <li><strong>Start</strong> : Retourne à la position initiale</li>
-          <li><strong>Previous/Next</strong> : Navigate coup par coup</li>
-          <li><strong>End</strong> : Va à la fin de la partie</li>
-          <li><strong>Flip Board</strong> : Change la perspective (blanc/noir)</li>
+          <li>Utilisez les boutons "Start", "Previous", "Next", "End" pour naviguer</li>
+          <li>Observez les coups joués étape par étape</li>
+          <li>Le compteur de coups s'affiche en temps réel</li>
+        </ul>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-lock"></i> Sécurité & Reproductibilité</h4>
+        <p>Points importants à retenir :</p>
+        <ul>
+          <li><strong>Déterministe</strong> : La même partie PGN génère toujours le même mot de passe</li>
+          <li><strong>Cryptographiquement sécurisé</strong> : Utilise SHA-256 pour le hashing</li>
+          <li><strong>Unique</strong> : Chaque partie différente = mot de passe différent</li>
+          <li><strong>Mode discret</strong> : Option pour masquer le mot de passe à l'écran</li>
         </ul>
       </div>
 
       <div class="instruction-item">
         <h4><i class="fas fa-lightbulb"></i> Conseils d'utilisation</h4>
         <ul>
-          <li><strong>Parties mémorables</strong> : Utilisez vos parties favorites pour des mots de passe faciles à retenir</li>
-          <li><strong>Longueur</strong> : 16+ caractères recommandés pour une sécurité optimale</li>
-          <li><strong>Reproductibilité</strong> : La même partie génère toujours le même mot de passe</li>
-          <li><strong>Variantes</strong> : Changez quelques coups pour créer des mots de passe différents</li>
-          <li><strong>Mode discret</strong> : Cochez la case pour masquer le mot de passe généré (utile en public)</li>
+          <li>Sauvegardez vos parties PGN importantes dans un endroit sûr</li>
+          <li>Utilisez des parties mémorables pour vous souvenir du mot de passe</li>
+          <li>Variez la longueur selon vos besoins de sécurité</li>
+          <li>Le mode discret est recommandé dans les espaces publics</li>
         </ul>
-        <div class="security-tip">
-          <p><i class="fas fa-exclamation-triangle"></i> Important : Gardez vos PGN en sécurité, ils sont la clé de vos mots de passe !</p>
-        </div>
       </div>
     </div>
   </div>
-  <div id="toast" class="toast">Password Copied!</div>
 
-  <script>
-    // Variables globales pour le board d'échecs
-    let game = null;
-    let board = null;
-    let gameHistory = [];
-    let currentMoveIndex = -1;
-    let generatedPassword = '';
-    
-    document.getElementById('length').addEventListener('input', function() {
-      document.getElementById('length-label').innerText = this.value;
-    });
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Mot de passe copié !</div>
 
-    async function generate() {
-      const pgnText = document.getElementById('pgnInput').value.trim();
-      if (!pgnText) {
-        alert("Please paste a PGN first!");
-        return;
-      }
-
-      const length = parseInt(document.getElementById('length').value, 10);
-      const unwantedPartsRegex = /\[[^\]]*\]|\{[^}]*\}|\([^)]*\)|\b\d+\.{1,3}|(1-0|0-1|1\/2-1\/2|\*)|[?!#+]/g;
-      const movesOnly = pgnText.replace(unwantedPartsRegex, '').replace(/\s+/g, ' ').trim();
-
-      const password = await generateSecurePasswordFromPGN(movesOnly, length);
-      generatedPassword = password; // Stocker le mot de passe pour la copie
-      
-      const isDiscreteMode = document.getElementById('discrete-mode').checked;
-      const passwordElement = document.getElementById('password-text');
-      
-      if (isDiscreteMode) {
-        passwordElement.innerHTML = '<span class="hidden-message"><i class="fas fa-lock"></i> Mot de passe généré (masqué pour sécurité)</span>';
-        passwordElement.classList.add('password-hidden');
-      } else {
-        passwordElement.innerText = password;
-        passwordElement.classList.remove('password-hidden');
-      }
-      
-      document.getElementById('password-container').classList.add('show');
-    }
-
-    function copyPassword() {
-      // Utiliser le mot de passe stocké plutôt que le texte affiché
-      const passwordToCopy = generatedPassword || document.getElementById('password-text').innerText;
-      navigator.clipboard.writeText(passwordToCopy).then(() => {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 2000);
-      }, (err) => {
-        alert('Failed to copy password.');
-      });
-    }
-
-    async function generateSecurePasswordFromPGN(pgnText, length = 16) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(pgnText);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-      const specials = '!@#$%^&*()_+-=';
-      let passwordChars = [];
-
-      passwordChars.push(String.fromCharCode(65 + (hashArray[0] % 26))); // Uppercase
-      passwordChars.push(String.fromCharCode(97 + (hashArray[1] % 26))); // Lowercase
-      passwordChars.push(String.fromCharCode(48 + (hashArray[2] % 10)));   // Digit
-      passwordChars.push(specials[hashArray[3] % specials.length]);      // Special
-
-      for (let i = 4; passwordChars.length < length; i++) {
-        const charCode = hashArray[i % hashArray.length];
-        passwordChars.push(String.fromCharCode(33 + (charCode % 94))); // Printable ASCII
-      }
-
-      // Deterministic shuffle
-      for (let i = passwordChars.length - 1; i > 0; i--) {
-        const j = hashArray[i % hashArray.length] % (i + 1);
-        [passwordChars[i], passwordChars[j]] = [passwordChars[j], passwordChars[i]];
-      }
-
-      return passwordChars.slice(0, length).join('');
-    }
-
-    // Fonctions pour le board d'échecs
-    function onDragStart(source, piece, position, orientation) {
-      // Ne permet de déplacer que les pièces du joueur à qui c'est le tour
-      if (game.game_over()) return false;
-      if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false;
-      }
-    }
-
-    function onDrop(source, target) {
-      // Vérifier si le coup est légal
-      let move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q' // Toujours promouvoir en dame pour simplifier
-      });
-
-      // Le coup n'est pas légal
-      if (move === null) return 'snapback';
-
-      // Mettre à jour le PGN dans le textarea
-      updatePgnFromBoard();
-    }
-
-    function onSnapEnd() {
-      board.position(game.fen());
-    }
-
-    function updatePgnFromBoard() {
-      document.getElementById('pgnInput').value = game.pgn();
-    }
-
-    function initializeBoard() {
-      game = new Chess();
-      let config = {
-        draggable: true,
-        position: 'start',
-        onDragStart: onDragStart,
-        onDrop: onDrop,
-        onSnapEnd: onSnapEnd,
-        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
-      };
-      board = Chessboard('chessboard', config);
-    }
-
-    function loadPgnToBoard() {
-      const pgnText = document.getElementById('pgnInput').value.trim();
-      if (!pgnText) {
-        alert("Please paste a PGN first!");
-        return;
-      }
-
-      try {
-        game = new Chess();
-        game.load_pgn(pgnText);
-        
-        // Construire l'historique des positions
-        buildGameHistory();
-        
-        // Aller à la fin de la partie
-        goToEnd();
-      } catch (error) {
-        alert("Invalid PGN format!");
-      }
-    }
-
-    function clearBoard() {
-      game = new Chess();
-      game.clear();
-      board.clear();
-      document.getElementById('pgnInput').value = '';
-      gameHistory = [];
-      currentMoveIndex = -1;
-      updateMoveInfo();
-    }
-
-    function resetBoard() {
-      game = new Chess();
-      board.start();
-      document.getElementById('pgnInput').value = '';
-      gameHistory = [];
-      currentMoveIndex = -1;
-      updateMoveInfo();
-    }
-
-    function flipBoard() {
-      board.flip();
-    }
-
-    // Fonctions de navigation dans les coups
-    function buildGameHistory() {
-      gameHistory = [];
-      let tempGame = new Chess();
-      
-      // Position initiale
-      gameHistory.push({
-        fen: tempGame.fen(),
-        move: null,
-        san: 'Position initiale'
-      });
-      
-      // Rejouez tous les coups pour construire l'historique
-      try {
-        tempGame.load_pgn(document.getElementById('pgnInput').value.trim());
-        let history = tempGame.history({ verbose: true });
-        
-        tempGame = new Chess(); // Reset pour rejouer
-        
-        history.forEach((move, index) => {
-          tempGame.move(move);
-          gameHistory.push({
-            fen: tempGame.fen(),
-            move: move,
-            san: move.san,
-            moveNumber: Math.ceil((index + 1) / 2)
-          });
-        });
-      } catch (error) {
-        console.error("Error building game history:", error);
-      }
-    }
-
-    function updateMoveInfo() {
-      const moveInfo = document.getElementById('move-info');
-      if (currentMoveIndex < 0 || currentMoveIndex >= gameHistory.length) {
-        moveInfo.textContent = 'Position initiale';
-        return;
-      }
-      
-      const currentPosition = gameHistory[currentMoveIndex];
-      if (currentPosition.san === 'Position initiale') {
-        moveInfo.textContent = 'Position initiale';
-      } else {
-        const moveNum = currentPosition.moveNumber;
-        const isWhite = currentMoveIndex % 2 === 1;
-        moveInfo.textContent = `Move ${moveNum}${isWhite ? '' : '...'}: ${currentPosition.san}`;
-      }
-    }
-
-    function goToStart() {
-      if (gameHistory.length > 0) {
-        currentMoveIndex = 0;
-        board.position(gameHistory[0].fen);
-        updateMoveInfo();
-      }
-    }
-
-    function goToEnd() {
-      if (gameHistory.length > 0) {
-        currentMoveIndex = gameHistory.length - 1;
-        board.position(gameHistory[currentMoveIndex].fen);
-        updateMoveInfo();
-      }
-    }
-
-    function previousMove() {
-      if (currentMoveIndex > 0) {
-        currentMoveIndex--;
-        board.position(gameHistory[currentMoveIndex].fen);
-        updateMoveInfo();
-      }
-    }
-
-    function nextMove() {
-      if (currentMoveIndex < gameHistory.length - 1) {
-        currentMoveIndex++;
-        board.position(gameHistory[currentMoveIndex].fen);
-        updateMoveInfo();
-      }
-    }
-
-    // Animation de background au scroll
-    function updateBackgroundOnScroll() {
-      const scrollPercent = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
-      const gradientPosition = (1 - scrollPercent) * 100;
-      document.body.style.backgroundPosition = `${gradientPosition}% 50%, center`;
-    }
-
-    window.addEventListener('scroll', updateBackgroundOnScroll);
-
-    // Initialiser le board au chargement de la page
-    $(document).ready(function() {
-      initializeBoard();
-      updateMoveInfo();
-    });
-  </script>
+  <!-- External Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+  
+  <!-- Local Scripts -->
+  <script src="js/script.js"></script>
 </body>
 </html>
