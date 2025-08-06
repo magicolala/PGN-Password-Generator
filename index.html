@@ -5,6 +5,10 @@
   <title>PGN to Secure Password</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -138,6 +142,133 @@
     .toast.show {
         opacity: 1;
     }
+    
+    .chess-section {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+    
+    .chess-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+    
+    .chess-btn {
+        padding: 8px 16px;
+        background: #008793;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.3s;
+    }
+    
+    .chess-btn:hover {
+        background: #00bf72;
+    }
+    
+    #chessboard {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+    
+    .board-container {
+        text-align: center;
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+    
+    .move-navigation {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .move-navigation p {
+        margin-bottom: 10px;
+        font-size: 1em;
+    }
+    
+    .nav-controls {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    
+    .instructions-section {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border-left: 4px solid #a8eb12;
+    }
+    
+    .instructions-section h3 {
+        color: #a8eb12;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .instruction-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+        border-left: 2px solid #008793;
+    }
+    
+    .instruction-item h4 {
+        color: #00bf72;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .instruction-item p {
+        margin-bottom: 8px;
+        line-height: 1.4;
+        font-size: 0.95em;
+    }
+    
+    .instruction-item ul {
+        margin-left: 20px;
+        margin-top: 5px;
+    }
+    
+    .instruction-item li {
+        margin-bottom: 3px;
+        font-size: 0.9em;
+    }
+    
+    .security-tip {
+        background: rgba(168, 235, 18, 0.1);
+        border-left: 2px solid #a8eb12;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    
+    .security-tip p {
+        color: #a8eb12;
+        font-weight: bold;
+        margin: 0;
+        font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
@@ -161,10 +292,113 @@
         </button>
       </div>
     </div>
+    
+    <div class="chess-section">
+      <h2><i class="fas fa-chess"></i> Chess Board</h2>
+      <div class="chess-controls">
+        <button class="chess-btn" onclick="loadPgnToBoard()">
+          <i class="fas fa-upload"></i> Load PGN to Board
+        </button>
+        <button class="chess-btn" onclick="clearBoard()">
+          <i class="fas fa-trash"></i> Clear Board
+        </button>
+        <button class="chess-btn" onclick="resetBoard()">
+          <i class="fas fa-undo"></i> Reset Board
+        </button>
+        <button class="chess-btn" onclick="flipBoard()">
+          <i class="fas fa-sync-alt"></i> Flip Board
+        </button>
+      </div>
+      
+      <div class="move-navigation">
+        <p><strong>Move Navigation:</strong> <span id="move-info">Position initiale</span></p>
+        <div class="nav-controls">
+          <button class="chess-btn" onclick="goToStart()">
+            <i class="fas fa-fast-backward"></i> Start
+          </button>
+          <button class="chess-btn" onclick="previousMove()">
+            <i class="fas fa-step-backward"></i> Previous
+          </button>
+          <button class="chess-btn" onclick="nextMove()">
+            <i class="fas fa-step-forward"></i> Next
+          </button>
+          <button class="chess-btn" onclick="goToEnd()">
+            <i class="fas fa-fast-forward"></i> End
+          </button>
+        </div>
+      </div>
+      <div class="board-container">
+        <div id="chessboard"></div>
+      </div>
+    </div>
+    
+    <div class="instructions-section">
+      <h3><i class="fas fa-info-circle"></i> Comment utiliser PGN Password Generator</h3>
+      
+      <div class="instruction-item">
+        <h4><i class="fas fa-key"></i> Qu'est-ce que c'est ?</h4>
+        <p>Ce générateur transforme n'importe quelle partie d'échecs (au format PGN) en un mot de passe cryptographiquement sécurisé. Chaque partie unique génère un mot de passe unique et reproductible.</p>
+        <div class="security-tip">
+          <p><i class="fas fa-shield-alt"></i> Avantage : Vos mots de passe sont basés sur vos parties d'échecs mémorables !</p>
+        </div>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-paste"></i> Méthode 1 : Coller un PGN existant</h4>
+        <p>Si vous avez déjà une partie au format PGN :</p>
+        <ul>
+          <li>Collez votre PGN dans la zone de texte</li>
+          <li>Ajustez la longueur du mot de passe (8-32 caractères)</li>
+          <li>Cliquez sur "Generate" pour créer votre mot de passe</li>
+          <li>Optionnel : Cliquez "Load PGN to Board" pour visualiser la partie</li>
+        </ul>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-chess-knight"></i> Méthode 2 : Jouer une partie sur le board</h4>
+        <p>Pour créer une nouvelle partie directement :</p>
+        <ul>
+          <li>Utilisez le board d'échecs ci-dessus pour jouer vos coups</li>
+          <li>Déplacez les pièces en cliquant et glissant (drag & drop)</li>
+          <li>Le PGN se génère automatiquement dans la zone de texte</li>
+          <li>Cliquez "Generate" quand vous êtes satisfait de votre partie</li>
+        </ul>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-eye"></i> Navigation dans une partie</h4>
+        <p>Pour analyser une partie coup par coup :</p>
+        <ul>
+          <li><strong>Start</strong> : Retourne à la position initiale</li>
+          <li><strong>Previous/Next</strong> : Navigate coup par coup</li>
+          <li><strong>End</strong> : Va à la fin de la partie</li>
+          <li><strong>Flip Board</strong> : Change la perspective (blanc/noir)</li>
+        </ul>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-lightbulb"></i> Conseils d'utilisation</h4>
+        <ul>
+          <li><strong>Parties mémorables</strong> : Utilisez vos parties favorites pour des mots de passe faciles à retenir</li>
+          <li><strong>Longueur</strong> : 16+ caractères recommandés pour une sécurité optimale</li>
+          <li><strong>Reproductibilité</strong> : La même partie génère toujours le même mot de passe</li>
+          <li><strong>Variantes</strong> : Changez quelques coups pour créer des mots de passe différents</li>
+        </ul>
+        <div class="security-tip">
+          <p><i class="fas fa-exclamation-triangle"></i> Important : Gardez vos PGN en sécurité, ils sont la clé de vos mots de passe !</p>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="toast" class="toast">Password Copied!</div>
 
   <script>
+    // Variables globales pour le board d'échecs
+    let game = null;
+    let board = null;
+    let gameHistory = [];
+    let currentMoveIndex = -1;
+    
     document.getElementById('length').addEventListener('input', function() {
       document.getElementById('length-label').innerText = this.value;
     });
@@ -225,6 +459,184 @@
 
       return passwordChars.slice(0, length).join('');
     }
+
+    // Fonctions pour le board d'échecs
+    function onDragStart(source, piece, position, orientation) {
+      // Ne permet de déplacer que les pièces du joueur à qui c'est le tour
+      if (game.game_over()) return false;
+      if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+        return false;
+      }
+    }
+
+    function onDrop(source, target) {
+      // Vérifier si le coup est légal
+      let move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q' // Toujours promouvoir en dame pour simplifier
+      });
+
+      // Le coup n'est pas légal
+      if (move === null) return 'snapback';
+
+      // Mettre à jour le PGN dans le textarea
+      updatePgnFromBoard();
+    }
+
+    function onSnapEnd() {
+      board.position(game.fen());
+    }
+
+    function updatePgnFromBoard() {
+      document.getElementById('pgnInput').value = game.pgn();
+    }
+
+    function initializeBoard() {
+      game = new Chess();
+      let config = {
+        draggable: true,
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onSnapEnd: onSnapEnd,
+        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+      };
+      board = Chessboard('chessboard', config);
+    }
+
+    function loadPgnToBoard() {
+      const pgnText = document.getElementById('pgnInput').value.trim();
+      if (!pgnText) {
+        alert("Please paste a PGN first!");
+        return;
+      }
+
+      try {
+        game = new Chess();
+        game.load_pgn(pgnText);
+        
+        // Construire l'historique des positions
+        buildGameHistory();
+        
+        // Aller à la fin de la partie
+        goToEnd();
+      } catch (error) {
+        alert("Invalid PGN format!");
+      }
+    }
+
+    function clearBoard() {
+      game = new Chess();
+      game.clear();
+      board.clear();
+      document.getElementById('pgnInput').value = '';
+      gameHistory = [];
+      currentMoveIndex = -1;
+      updateMoveInfo();
+    }
+
+    function resetBoard() {
+      game = new Chess();
+      board.start();
+      document.getElementById('pgnInput').value = '';
+      gameHistory = [];
+      currentMoveIndex = -1;
+      updateMoveInfo();
+    }
+
+    function flipBoard() {
+      board.flip();
+    }
+
+    // Fonctions de navigation dans les coups
+    function buildGameHistory() {
+      gameHistory = [];
+      let tempGame = new Chess();
+      
+      // Position initiale
+      gameHistory.push({
+        fen: tempGame.fen(),
+        move: null,
+        san: 'Position initiale'
+      });
+      
+      // Rejouez tous les coups pour construire l'historique
+      try {
+        tempGame.load_pgn(document.getElementById('pgnInput').value.trim());
+        let history = tempGame.history({ verbose: true });
+        
+        tempGame = new Chess(); // Reset pour rejouer
+        
+        history.forEach((move, index) => {
+          tempGame.move(move);
+          gameHistory.push({
+            fen: tempGame.fen(),
+            move: move,
+            san: move.san,
+            moveNumber: Math.ceil((index + 1) / 2)
+          });
+        });
+      } catch (error) {
+        console.error("Error building game history:", error);
+      }
+    }
+
+    function updateMoveInfo() {
+      const moveInfo = document.getElementById('move-info');
+      if (currentMoveIndex < 0 || currentMoveIndex >= gameHistory.length) {
+        moveInfo.textContent = 'Position initiale';
+        return;
+      }
+      
+      const currentPosition = gameHistory[currentMoveIndex];
+      if (currentPosition.san === 'Position initiale') {
+        moveInfo.textContent = 'Position initiale';
+      } else {
+        const moveNum = currentPosition.moveNumber;
+        const isWhite = currentMoveIndex % 2 === 1;
+        moveInfo.textContent = `Move ${moveNum}${isWhite ? '' : '...'}: ${currentPosition.san}`;
+      }
+    }
+
+    function goToStart() {
+      if (gameHistory.length > 0) {
+        currentMoveIndex = 0;
+        board.position(gameHistory[0].fen);
+        updateMoveInfo();
+      }
+    }
+
+    function goToEnd() {
+      if (gameHistory.length > 0) {
+        currentMoveIndex = gameHistory.length - 1;
+        board.position(gameHistory[currentMoveIndex].fen);
+        updateMoveInfo();
+      }
+    }
+
+    function previousMove() {
+      if (currentMoveIndex > 0) {
+        currentMoveIndex--;
+        board.position(gameHistory[currentMoveIndex].fen);
+        updateMoveInfo();
+      }
+    }
+
+    function nextMove() {
+      if (currentMoveIndex < gameHistory.length - 1) {
+        currentMoveIndex++;
+        board.position(gameHistory[currentMoveIndex].fen);
+        updateMoveInfo();
+      }
+    }
+
+    // Initialiser le board au chargement de la page
+    $(document).ready(function() {
+      initializeBoard();
+      updateMoveInfo();
+    });
   </script>
 </body>
 </html>
