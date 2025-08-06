@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Générateur de Mot de Passe PGN - Convertir Parties d'Échecs en Mots de Passe Sécurisés</title>
-  <meta name="description" content="Transformez vos parties d'échecs PGN en mots de passe cryptographiquement sécurisés. Générateur unique, déterministe et reproductible basé sur SHA-256.">
-  <meta name="keywords" content="générateur mot de passe, PGN, échecs, sécurité, cryptographie, SHA-256, chess password generator">
+  <meta name="description"
+    content="Transformez vos parties d'échecs PGN en mots de passe cryptographiquement sécurisés. Générateur unique, déterministe et reproductible basé sur SHA-256.">
+  <meta name="keywords"
+    content="générateur mot de passe, PGN, échecs, sécurité, cryptographie, SHA-256, chess password generator">
   <meta name="author" content="PGN Password Generator">
   <meta name="robots" content="index, follow">
-  
+
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Générateur de Mot de Passe PGN - Sécurisé et Unique">
-  <meta property="og:description" content="Convertissez vos parties d'échecs en mots de passe cryptographiquement sécurisés. Chaque partie génère un mot de passe unique et reproductible.">
+  <meta property="og:description"
+    content="Convertissez vos parties d'échecs en mots de passe cryptographiquement sécurisés. Chaque partie génère un mot de passe unique et reproductible.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://github.com/magicolala/PGN-Password-Generator">
   <meta property="og:image" content="assets/og-image.png">
   <meta property="og:locale" content="fr_FR">
-  
+
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Générateur de Mot de Passe PGN">
   <meta name="twitter:description" content="Transformez vos parties d'échecs en mots de passe sécurisés">
   <meta name="twitter:image" content="assets/twitter-image.png">
-  
+
   <!-- Canonical URL -->
   <link rel="canonical" href="https://github.com/magicolala/PGN-Password-Generator">
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  
+
   <!-- Theme Color for Mobile Browsers -->
   <meta name="theme-color" content="#ffffff">
   <meta name="msapplication-TileColor" content="#ffffff">
-  
+
   <!-- PWA Manifest -->
   <link rel="manifest" href="site.webmanifest">
-  
+
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
@@ -62,15 +66,16 @@
     "inLanguage": "fr"
   }
   </script>
-  
+
   <!-- External Libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
-  
+
   <!-- Local Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <!-- Page Loader -->
   <div id="page-loader" class="loader-container">
@@ -105,11 +110,11 @@
         </div>
       </div>
     </header>
-    
+
     <main class="main-content">
       <section class="left-panel">
         <h2><i class="fas fa-edit"></i> Saisie PGN</h2>
-        
+
         <div class="pgn-input-section">
           <div class="file-upload-container">
             <input type="file" id="pgnFileInput" accept=".pgn,.txt" style="display: none;">
@@ -118,14 +123,14 @@
             </button>
             <span class="file-name" id="fileName"></span>
           </div>
-          
+
           <div class="or-divider">
             <span>ou</span>
           </div>
-          
+
           <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
         </div>
-        
+
         <div class="controls">
           <div class="slider-container">
             <p>Longueur du mot de passe : <span id="length-label">16</span></p>
@@ -133,8 +138,8 @@
           </div>
           <div class="discrete-mode">
             <label>
-              <input type="checkbox" id="discrete-mode"> 
-              <i class="fas fa-eye-slash"></i> 
+              <input type="checkbox" id="discrete-mode">
+              <i class="fas fa-eye-slash"></i>
               Mode discret (masquer le mot de passe)
             </label>
           </div>
@@ -151,14 +156,14 @@
           </div>
         </div>
       </section>
-      
+
       <section class="right-panel">
         <div class="chess-section">
           <div class="chess-header">
             <h3><i class="fas fa-chess"></i> Échiquier Interactif</h3>
             <p class="chess-description">Jouez directement sur l'échiquier ou chargez un PGN existant</p>
           </div>
-          
+
           <div class="chess-controls">
             <div class="control-group">
               <button class="chess-btn primary" onclick="loadPgnToBoard()">
@@ -177,7 +182,7 @@
               </button>
             </div>
           </div>
-          
+
           <div class="move-navigation">
             <p><strong>Navigation des coups :</strong> <span id="move-info">Position initiale</span></p>
             <div class="nav-controls">
@@ -201,15 +206,22 @@
         </div>
       </section>
     </main>
-    
+
     <section class="instructions-section">
       <h2><i class="fas fa-info-circle"></i> Guide d'Utilisation du Générateur</h2>
-      
+
       <div class="instruction-item">
         <h4><i class="fas fa-key"></i> Qu'est-ce que c'est ?</h4>
-        <p>Ce générateur transforme n'importe quelle partie d'échecs (au format PGN) en un mot de passe cryptographiquement sécurisé. Chaque partie unique génère un mot de passe unique et reproductible.</p>
+        <p>Ce générateur transforme n'importe quelle partie d'échecs (au format PGN) en un mot de passe
+          cryptographiquement sécurisé. Chaque partie unique génère un mot de passe unique et reproductible.</p>
+        <p>Le jeu d'échecs est d'une complexité astronomique. Le nombre de parties possibles est estimé à
+          10<sup>120</sup>, un chiffre connu sous le nom de "nombre de Shannon". C'est bien plus que le nombre d'atomes
+          dans l'univers observable ! Cette immensité garantit que chaque partie que vous jouez est pratiquement unique,
+          faisant d'elle une base parfaite pour un mot de passe que vous seul pouvez recréer.</p>
+
         <div class="security-tip">
-          <p><i class="fas fa-shield-alt"></i> Avantage : Vos mots de passe sont basés sur vos parties d'échecs mémorables !</p>
+          <p><i class="fas fa-shield-alt"></i> Avantage : Vos mots de passe sont basés sur vos parties d'échecs
+            mémorables !</p>
         </div>
       </div>
 
@@ -275,8 +287,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
   <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-  
+
   <!-- Local Scripts -->
   <script src="js/script.js"></script>
 </body>
+
 </html>
