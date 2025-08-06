@@ -2,7 +2,59 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>PGN to Secure Password</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur de Mot de Passe PGN - Convertir Parties d'Échecs en Mots de Passe Sécurisés</title>
+  <meta name="description" content="Transformez vos parties d'échecs PGN en mots de passe cryptographiquement sécurisés. Générateur unique, déterministe et reproductible basé sur SHA-256.">
+  <meta name="keywords" content="générateur mot de passe, PGN, échecs, sécurité, cryptographie, SHA-256, chess password generator">
+  <meta name="author" content="PGN Password Generator">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Générateur de Mot de Passe PGN - Sécurisé et Unique">
+  <meta property="og:description" content="Convertissez vos parties d'échecs en mots de passe cryptographiquement sécurisés. Chaque partie génère un mot de passe unique et reproductible.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/magicolala/PGN-Password-Generator">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta property="og:locale" content="fr_FR">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Générateur de Mot de Passe PGN">
+  <meta name="twitter:description" content="Transformez vos parties d'échecs en mots de passe sécurisés">
+  <meta name="twitter:image" content="assets/twitter-image.png">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://github.com/magicolala/PGN-Password-Generator">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Générateur de Mot de Passe PGN",
+    "description": "Application web qui transforme les parties d'échecs au format PGN en mots de passe cryptographiquement sécurisés",
+    "url": "https://github.com/magicolala/PGN-Password-Generator",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "magicolala"
+    },
+    "keywords": ["générateur mot de passe", "PGN", "échecs", "sécurité", "cryptographie"],
+    "inLanguage": "fr"
+  }
+  </script>
   
   <!-- External Libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -14,11 +66,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>PGN Password Generator</h1>
+    <header>
+      <h1>Générateur de Mot de Passe PGN</h1>
+      <p class="hero-subtitle">Transformez vos parties d'échecs en mots de passe cryptographiquement sécurisés</p>
+    </header>
     
-    <div class="main-content">
-      <div class="left-panel">
-        <h2><i class="fas fa-edit"></i> PGN Input</h2>
+    <main class="main-content">
+      <section class="left-panel">
+        <h2><i class="fas fa-edit"></i> Saisie PGN</h2>
         <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
         <div class="controls">
           <div class="slider-container">
@@ -44,24 +99,32 @@
             </button>
           </div>
         </div>
-      </div>
+      </section>
       
-      <div class="right-panel">
+      <section class="right-panel">
         <div class="chess-section">
-          <h2><i class="fas fa-chess"></i> Échiquier</h2>
+          <div class="chess-header">
+            <h3><i class="fas fa-chess"></i> Échiquier Interactif</h3>
+            <p class="chess-description">Jouez directement sur l'échiquier ou chargez un PGN existant</p>
+          </div>
+          
           <div class="chess-controls">
-            <button class="chess-btn" onclick="loadPgnToBoard()">
-              <i class="fas fa-upload"></i> Charger le PGN sur l'échiquier
-            </button>
-            <button class="chess-btn" onclick="clearBoard()">
-              <i class="fas fa-trash"></i> Vider l'échiquier
-            </button>
-            <button class="chess-btn" onclick="resetBoard()">
-              <i class="fas fa-undo"></i> Réinitialiser
-            </button>
-            <button class="chess-btn" onclick="flipBoard()">
-              <i class="fas fa-sync-alt"></i> Retourner l'échiquier
-            </button>
+            <div class="control-group">
+              <button class="chess-btn primary" onclick="loadPgnToBoard()">
+                <i class="fas fa-upload"></i> Charger le PGN
+              </button>
+              <button class="chess-btn secondary" onclick="clearBoard()">
+                <i class="fas fa-trash"></i> Vider
+              </button>
+            </div>
+            <div class="control-group">
+              <button class="chess-btn secondary" onclick="resetBoard()">
+                <i class="fas fa-undo"></i> Réinitialiser
+              </button>
+              <button class="chess-btn secondary" onclick="flipBoard()">
+                <i class="fas fa-sync-alt"></i> Retourner
+              </button>
+            </div>
           </div>
           
           <div class="move-navigation">
@@ -82,14 +145,14 @@
             </div>
           </div>
           <div class="board-container">
-            <div id="chessboard"></div>
+            <div id="chessboard" role="img" aria-label="Échiquier interactif pour visualiser les parties PGN"></div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
     
-    <div class="instructions-section">
-      <h3><i class="fas fa-info-circle"></i> Comment utiliser PGN Password Generator</h3>
+    <section class="instructions-section">
+      <h2><i class="fas fa-info-circle"></i> Guide d'Utilisation du Générateur</h2>
       
       <div class="instruction-item">
         <h4><i class="fas fa-key"></i> Qu'est-ce que c'est ?</h4>
@@ -151,11 +214,11 @@
           <li>Le mode discret est recommandé dans les espaces publics</li>
         </ul>
       </div>
-    </div>
+    </section>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="toast">Mot de passe copié !</div>
+  <div id="toast" class="toast" role="alert" aria-live="polite">Mot de passe copié !</div>
 
   <!-- External Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
