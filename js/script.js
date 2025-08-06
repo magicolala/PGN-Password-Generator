@@ -5,6 +5,25 @@ let gameHistory = [];
 let currentMoveIndex = -1;
 let generatedPassword = '';
 
+// Page Loader Management
+function hidePageLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) {
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 500);
+  }
+}
+
+function checkAllResourcesLoaded() {
+  // Check if all critical resources are loaded
+  const scriptsLoaded = typeof Chess !== 'undefined' && typeof Chessboard !== 'undefined' && typeof $ !== 'undefined';
+  const imagesLoaded = document.readyState === 'complete';
+  
+  return scriptsLoaded && imagesLoaded;
+}
+
 // Password Length Slider
 document.addEventListener('DOMContentLoaded', function() {
   // Update length label when slider changes
@@ -26,6 +45,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize chess board
   initializeBoard();
   updateMoveInfo();
+  
+  // Check if everything is loaded and hide loader
+  const checkAndHideLoader = () => {
+    if (checkAllResourcesLoaded()) {
+      setTimeout(hidePageLoader, 1000); // Small delay for smooth UX
+    } else {
+      setTimeout(checkAndHideLoader, 100); // Retry after 100ms
+    }
+  };
+  
+  checkAndHideLoader();
 });
 
 // File Upload Function
@@ -441,4 +471,11 @@ window.addEventListener('load', () => {
   observeElements();
   enhanceFileInput();
   enhanceSlider();
+  
+  // Final check to ensure loader is hidden
+  setTimeout(() => {
+    if (document.getElementById('page-loader') && !document.getElementById('page-loader').classList.contains('hidden')) {
+      hidePageLoader();
+    }
+  }, 2000);
 });
