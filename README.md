@@ -1,56 +1,59 @@
-# PGN Password Generator
+# Générateur de Mots de Passe PGN
 
-A web application that converts chess PGN (Portable Game Notation) files into secure, deterministic passwords.
+Une application web qui convertit des fichiers PGN (Portable Game Notation) d'échecs en mots de passe sécurisés et déterministes.
 
-## Features
+## Fonctionnalités
 
-- **PGN Input**: Paste any chess game in PGN format
-- **Secure Generation**: Uses SHA-256 hashing for cryptographically secure passwords
-- **Customizable Length**: Adjustable password length (8-32 characters)
-- **Character Variety**: Includes uppercase, lowercase, numbers, and special characters
-- **Deterministic**: Same PGN always generates the same password
-- **Copy Function**: One-click password copying to clipboard
+- **Entrée PGN** : Collez n'importe quelle partie d'échecs au format PGN
+- **Génération Sécurisée** : Utilise le hachage SHA-256 pour des mots de passe cryptographiquement sécurisés
+- **Longueur Personnalisable** : Longueur de mot de passe ajustable (8-32 caractères)
+- **Variété de Caractères** : Inclut majuscules, minuscules, chiffres et caractères spéciaux
+- **Déterministe** : Le même PGN génère toujours le même mot de passe
+- **Fonction de Copie** : Copie du mot de passe dans le presse-papiers en un clic
 
-## How It Works
+## Comment ça fonctionne
 
-1. **Input**: Paste a chess game in PGN notation
-2. **Processing**: The app removes metadata, comments, and annotations from the PGN
-3. **Hashing**: Uses SHA-256 to create a hash from the clean move sequence
-4. **Generation**: Converts the hash into a secure password with guaranteed character variety
-5. **Output**: Displays the password with copy functionality
+1. **Entrée** : Collez une partie d'échecs en notation PGN
+2. **Traitement** : L'application supprime les métadonnées, commentaires et annotations du PGN
+3. **Hachage** : Utilise SHA-256 pour créer un hash à partir de la séquence de coups nettoyée
+4. **Génération** : Convertit le hash en un mot de passe sécurisé avec une variété de caractères garantie
+5. **Sortie** : Affiche le mot de passe avec la fonctionnalité de copie
 
-## Usage
+## Utilisation
 
-1. Open `index.html` in a web browser
-2. Paste your PGN text into the text area
-3. Adjust the password length using the slider (8-32 characters)
-4. Click "Generate" to create your password
-5. Click the copy icon to copy the password to clipboard
+1. Ouvrez `index.html` dans un navigateur web
+2. Collez votre texte PGN dans la zone de texte
+3. Ajustez la longueur du mot de passe avec le curseur (8-32 caractères)
+4. Cliquez sur "Générer" pour créer votre mot de passe
+5. Cliquez sur l'icône de copie pour copier le mot de passe dans le presse-papiers
 
-## Technical Details
+## Détails Techniques
 
-- **Algorithm**: SHA-256 hashing with deterministic character selection
-- **Security**: Ensures at least one uppercase, lowercase, digit, and special character
-- **Browser Support**: Modern browsers with Web Crypto API support
-- **No Dependencies**: Pure HTML, CSS, and JavaScript
+- **Algorithme** : Hachage SHA-256 avec sélection déterministe de caractères
+- **Sécurité** : Assure au moins une majuscule, une minuscule, un chiffre et un caractère spécial
+- **Compatibilité Navigateur** : Navigateurs modernes avec support de l'API Web Crypto
+- **Aucune Dépendance** : HTML, CSS et JavaScript purs
 
-## File Structure
+## Structure des Fichiers
 
 ```
 pgnPassword/
-├── index.html          # Main application file
-└── README.md           # This documentation
+├── index.html          # Fichier principal de l'application
+├── css/                # Feuilles de style
+├── js/                 # Scripts JavaScript
+├── assets/             # Ressources
+└── README.md           # Cette documentation
 ```
 
-## Example
+## Exemple
 
-Input PGN:
+PGN d'entrée :
 ```
 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6
 ```
 
-Output: A unique, secure password based on this move sequence.
+Sortie : Un mot de passe unique et sécurisé basé sur cette séquence de coups.
 
-## Security Note
+## Note de Sécurité
 
-This tool is designed for creating memorable yet secure passwords from chess games. The same PGN will always produce the same password, making it useful for creating consistent passwords from memorable games.
+Cet outil est conçu pour créer des mots de passe mémorables mais sécurisés à partir de parties d'échecs. Le même PGN produira toujours le même mot de passe, ce qui le rend utile pour créer des mots de passe cohérents à partir de parties mémorables.

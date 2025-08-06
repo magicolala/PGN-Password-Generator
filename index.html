@@ -22,7 +22,7 @@
         <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
         <div class="controls">
           <div class="slider-container">
-            <p>Password Length: <span id="length-label">16</span></p>
+            <p>Longueur du mot de passe : <span id="length-label">16</span></p>
             <input type="range" id="length" min="8" max="32" value="16">
           </div>
           <div class="discrete-mode">
@@ -33,7 +33,7 @@
             </label>
           </div>
           <button class="generate-btn" onclick="generate()">
-            <i class="fas fa-rocket"></i> Generate
+            <i class="fas fa-rocket"></i> Générer
           </button>
         </div>
         <div id="password-container">
@@ -48,36 +48,36 @@
       
       <div class="right-panel">
         <div class="chess-section">
-          <h2><i class="fas fa-chess"></i> Chess Board</h2>
+          <h2><i class="fas fa-chess"></i> Échiquier</h2>
           <div class="chess-controls">
             <button class="chess-btn" onclick="loadPgnToBoard()">
-              <i class="fas fa-upload"></i> Load PGN to Board
+              <i class="fas fa-upload"></i> Charger le PGN sur l'échiquier
             </button>
             <button class="chess-btn" onclick="clearBoard()">
-              <i class="fas fa-trash"></i> Clear Board
+              <i class="fas fa-trash"></i> Vider l'échiquier
             </button>
             <button class="chess-btn" onclick="resetBoard()">
-              <i class="fas fa-undo"></i> Reset Board
+              <i class="fas fa-undo"></i> Réinitialiser
             </button>
             <button class="chess-btn" onclick="flipBoard()">
-              <i class="fas fa-sync-alt"></i> Flip Board
+              <i class="fas fa-sync-alt"></i> Retourner l'échiquier
             </button>
           </div>
           
           <div class="move-navigation">
-            <p><strong>Move Navigation:</strong> <span id="move-info">Position initiale</span></p>
+            <p><strong>Navigation des coups :</strong> <span id="move-info">Position initiale</span></p>
             <div class="nav-controls">
               <button class="chess-btn" onclick="goToStart()">
-                <i class="fas fa-fast-backward"></i> Start
+                <i class="fas fa-fast-backward"></i> Début
               </button>
               <button class="chess-btn" onclick="previousMove()">
-                <i class="fas fa-step-backward"></i> Previous
+                <i class="fas fa-step-backward"></i> Précédent
               </button>
               <button class="chess-btn" onclick="nextMove()">
-                <i class="fas fa-step-forward"></i> Next
+                <i class="fas fa-step-forward"></i> Suivant
               </button>
               <button class="chess-btn" onclick="goToEnd()">
-                <i class="fas fa-fast-forward"></i> End
+                <i class="fas fa-fast-forward"></i> Fin
               </button>
             </div>
           </div>

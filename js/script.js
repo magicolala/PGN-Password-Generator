@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function generate() {
   const pgnText = document.getElementById('pgnInput').value.trim();
   if (!pgnText) {
-    alert("Please paste a PGN first!");
+    alert("Veuillez d'abord coller un PGN !");
     return;
   }
 
@@ -61,7 +61,7 @@ function copyPassword() {
       toast.classList.remove('show');
     }, 2000);
   }, (err) => {
-    alert('Failed to copy password.');
+    alert('Échec de la copie du mot de passe.');
   });
 }
 
@@ -142,7 +142,7 @@ function initializeBoard() {
 function loadPgnToBoard() {
   const pgnText = document.getElementById('pgnInput').value.trim();
   if (!pgnText) {
-    alert("Please paste a PGN first!");
+    alert("Veuillez d'abord coller un PGN !");
     return;
   }
 
@@ -156,7 +156,7 @@ function loadPgnToBoard() {
     // Go to end of game
     goToEnd();
   } catch (error) {
-    alert("Invalid PGN format!");
+    alert("Format PGN invalide !");
   }
 }
 
@@ -229,7 +229,7 @@ function updateMoveInfo() {
   } else {
     const moveNum = currentPosition.moveNumber;
     const isWhite = currentMoveIndex % 2 === 1;
-    moveInfo.textContent = `Move ${moveNum}${isWhite ? '' : '...'}: ${currentPosition.san}`;
+    moveInfo.textContent = `Coup ${moveNum}${isWhite ? '' : '...'}: ${currentPosition.san}`;
   }
 }
 
