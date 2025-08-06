@@ -117,6 +117,82 @@ h2 {
 }
 
 /* Form Elements */
+.pgn-input-section {
+  margin-bottom: 25px;
+}
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(168, 235, 18, 0.08);
+  border: 1px solid rgba(168, 235, 18, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.file-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #a8eb12, #00bf72);
+  color: #051937;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(168, 235, 18, 0.3);
+}
+
+.file-upload-btn:hover {
+  background: linear-gradient(135deg, #b8fb22, #00d47f);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(168, 235, 18, 0.4);
+}
+
+.file-name {
+  font-size: 0.9em;
+  color: #a8eb12;
+  font-style: italic;
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.or-divider {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.or-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.or-divider span {
+  background: rgba(5, 25, 55, 0.8);
+  padding: 0 15px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85em;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 textarea {
   width: 100%;
   height: 150px;
@@ -128,6 +204,13 @@ textarea {
   font-size: 14px;
   color: #fff;
   resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: rgba(168, 235, 18, 0.5);
+  box-shadow: 0 0 10px rgba(168, 235, 18, 0.2);
 }
 
 textarea::placeholder {

@@ -17,10 +17,52 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Initialize file input listener
+  const fileInput = document.getElementById('pgnFileInput');
+  if (fileInput) {
+    fileInput.addEventListener('change', handleFileUpload);
+  }
+  
   // Initialize chess board
   initializeBoard();
   updateMoveInfo();
 });
+
+// File Upload Function
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  // Update file name display
+  const fileName = document.getElementById('fileName');
+  fileName.textContent = file.name;
+  
+  // Read file content
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    document.getElementById('pgnInput').value = content;
+    
+    // Show success message
+    const toast = document.getElementById('toast');
+    const originalMessage = toast.textContent;
+    toast.textContent = `Fichier "${file.name}" chargé avec succès !`;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.textContent = originalMessage;
+      }, 300);
+    }, 2500);
+  };
+  
+  reader.onerror = function() {
+    alert('Erreur lors de la lecture du fichier.');
+  };
+  
+  reader.readAsText(file);
+}
 
 // Password Generation Functions
 async function generate() {

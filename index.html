@@ -74,7 +74,23 @@
     <main class="main-content">
       <section class="left-panel">
         <h2><i class="fas fa-edit"></i> Saisie PGN</h2>
-        <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
+        
+        <div class="pgn-input-section">
+          <div class="file-upload-container">
+            <input type="file" id="pgnFileInput" accept=".pgn,.txt" style="display: none;">
+            <button class="file-upload-btn" onclick="document.getElementById('pgnFileInput').click()">
+              <i class="fas fa-file-upload"></i> Charger un fichier PGN
+            </button>
+            <span class="file-name" id="fileName"></span>
+          </div>
+          
+          <div class="or-divider">
+            <span>ou</span>
+          </div>
+          
+          <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
+        </div>
+        
         <div class="controls">
           <div class="slider-container">
             <p>Longueur du mot de passe : <span id="length-label">16</span></p>
