@@ -67,43 +67,67 @@ function handleFileUpload(event) {
 // Password Generation Functions
 async function generate() {
   const pgnText = document.getElementById('pgnInput').value.trim();
+  const generateBtn = document.querySelector('.generate-btn');
+  
   if (!pgnText) {
-    alert("Veuillez d'abord coller un PGN !");
+    showErrorShake(generateBtn);
+    showToast("Veuillez d'abord coller un PGN !", 'error');
     return;
   }
 
-  const length = parseInt(document.getElementById('length').value, 10);
-  const unwantedPartsRegex = /\[[^\]]*\]|\{[^}]*\}|\([^)]*\)|\b\d+\.{1,3}|(1-0|0-1|1\/2-1\/2|\*)|[?!#+]/g;
-  const movesOnly = pgnText.replace(unwantedPartsRegex, '').replace(/\s+/g, ' ').trim();
+  // Add loading state
+  const originalText = generateBtn.innerHTML;
+  generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération...';
+  generateBtn.disabled = true;
+  
+  // Simulate processing time for better UX
+  setTimeout(async () => {
+    const length = parseInt(document.getElementById('length').value, 10);
+    const unwantedPartsRegex = /\[[^\]]*\]|\{[^}]*\}|\([^)]*\)|\b\d+\.{1,3}|(1-0|0-1|1\/2-1\/2|\*)|[?!#+]/g;
+    const movesOnly = pgnText.replace(unwantedPartsRegex, '').replace(/\s+/g, ' ').trim();
 
-  const password = await generateSecurePasswordFromPGN(movesOnly, length);
-  generatedPassword = password; // Store password for copying
-  
-  const isDiscreteMode = document.getElementById('discrete-mode').checked;
-  const passwordElement = document.getElementById('password-text');
-  
-  if (isDiscreteMode) {
-    passwordElement.innerHTML = '<span class="hidden-message"><i class="fas fa-lock"></i> Mot de passe généré (masqué pour sécurité)</span>';
-    passwordElement.classList.add('password-hidden');
-  } else {
-    passwordElement.innerText = password;
-    passwordElement.classList.remove('password-hidden');
-  }
-  
-  document.getElementById('password-container').classList.add('show');
+    const password = await generateSecurePasswordFromPGN(movesOnly, length);
+    generatedPassword = password; // Store password for copying
+    
+    const isDiscreteMode = document.getElementById('discrete-mode').checked;
+    const passwordElement = document.getElementById('password-text');
+    
+    if (isDiscreteMode) {
+      passwordElement.innerHTML = '<span class="hidden-message"><i class="fas fa-lock"></i> Mot de passe généré (masqué pour sécurité)</span>';
+      passwordElement.classList.add('password-hidden');
+    } else {
+      passwordElement.innerText = password;
+      passwordElement.classList.remove('password-hidden');
+    }
+    
+    // Reset button
+    generateBtn.innerHTML = originalText;
+    generateBtn.disabled = false;
+    
+    document.getElementById('password-container').classList.add('show');
+    showToast("Mot de passe généré avec succès !", 'success');
+  }, 800);
 }
 
 function copyPassword() {
   // Use stored password rather than displayed text
   const passwordToCopy = generatedPassword || document.getElementById('password-text').innerText;
+  const copyBtn = document.querySelector('.copy-btn');
+  
   navigator.clipboard.writeText(passwordToCopy).then(() => {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
+    // Visual feedback for copy button
+    const originalIcon = copyBtn.innerHTML;
+    copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+    copyBtn.style.color = '#a8eb12';
+    
     setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2000);
+      copyBtn.innerHTML = originalIcon;
+      copyBtn.style.color = '';
+    }, 1000);
+    
+    showToast("Mot de passe copié !", 'success');
   }, (err) => {
-    alert('Échec de la copie du mot de passe.');
+    showToast('Échec de la copie du mot de passe.', 'error');
   });
 }
 
@@ -307,11 +331,114 @@ function nextMove() {
   }
 }
 
-// Background Animation on Scroll
+// Interactive Helper Functions
+function showErrorShake(element) {
+  element.style.animation = 'shake 0.5s ease-in-out';
+  setTimeout(() => {
+    element.style.animation = '';
+  }, 500);
+}
+
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  const originalMessage = toast.textContent;
+  
+  // Update toast styling based on type
+  if (type === 'error') {
+    toast.style.background = '#ff4757';
+    toast.style.color = '#fff';
+  } else {
+    toast.style.background = '#a8eb12';
+    toast.style.color = '#051937';
+  }
+  
+  toast.textContent = message;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      toast.textContent = originalMessage;
+      toast.style.background = '';
+      toast.style.color = '';
+    }, 300);
+  }, 2500);
+}
+
+// Parallax effect for background
 function updateBackgroundOnScroll() {
   const scrollPercent = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
   const gradientPosition = (1 - scrollPercent) * 100;
   document.body.style.backgroundPosition = `${gradientPosition}% 50%, center`;
 }
 
+// Smooth element entry animations
+function observeElements() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.instruction-item').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    item.style.transition = 'all 0.6s ease';
+    observer.observe(item);
+  });
+}
+
+// Enhanced file input interaction
+function enhanceFileInput() {
+  const fileInput = document.getElementById('pgnFileInput');
+  const uploadContainer = document.querySelector('.file-upload-container');
+  
+  if (uploadContainer) {
+    uploadContainer.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadContainer.style.background = 'rgba(168, 235, 18, 0.15)';
+      uploadContainer.style.borderColor = 'rgba(168, 235, 18, 0.4)';
+    });
+    
+    uploadContainer.addEventListener('dragleave', () => {
+      uploadContainer.style.background = '';
+      uploadContainer.style.borderColor = '';
+    });
+    
+    uploadContainer.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadContainer.style.background = '';
+      uploadContainer.style.borderColor = '';
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        handleFileUpload({ target: { files } });
+      }
+    });
+  }
+}
+
+// Enhanced slider interaction
+function enhanceSlider() {
+  const slider = document.getElementById('length');
+  if (slider) {
+    slider.addEventListener('input', function() {
+      const percent = (this.value - this.min) / (this.max - this.min) * 100;
+      this.style.background = `linear-gradient(to right, #a8eb12 0%, #a8eb12 ${percent}%, rgba(0,0,0,0.5) ${percent}%, rgba(0,0,0,0.5) 100%)`;
+    });
+    
+    // Initialize slider styling
+    slider.dispatchEvent(new Event('input'));
+  }
+}
+
 window.addEventListener('scroll', updateBackgroundOnScroll);
+window.addEventListener('load', () => {
+  observeElements();
+  enhanceFileInput();
+  enhanceSlider();
+});

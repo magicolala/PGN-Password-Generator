@@ -5,6 +5,75 @@
   box-sizing: border-box; 
 }
 
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* CSS Keyframes for Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(168, 235, 18, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(168, 235, 18, 0.6), 0 0 30px rgba(168, 235, 18, 0.4);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Body & Background */
 body {
   font-family: 'Montserrat', sans-serif;
@@ -53,6 +122,12 @@ body::before {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   position: relative;
   z-index: 2;
+  animation: fadeInUp 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-2px);
 }
 
 .main-content {
@@ -64,11 +139,13 @@ body::before {
 .left-panel {
   flex: 1;
   min-width: 0;
+  animation: slideInFromLeft 0.6s ease-out;
 }
 
 .right-panel {
   flex: 1;
   min-width: 0;
+  animation: slideInFromRight 0.6s ease-out;
 }
 
 @media (max-width: 768px) {
@@ -149,12 +226,29 @@ h2 {
   transition: all 0.3s ease;
   white-space: nowrap;
   box-shadow: 0 3px 10px rgba(168, 235, 18, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.file-upload-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
 }
 
 .file-upload-btn:hover {
   background: linear-gradient(135deg, #b8fb22, #00d47f);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(168, 235, 18, 0.4);
+}
+
+.file-upload-btn:hover::before {
+  left: 100%;
 }
 
 .file-name {
@@ -262,11 +356,38 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 1.2em;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.generate-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
 .generate-btn:hover {
   background: #00bf72;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(168, 235, 18, 0.4);
+}
+
+.generate-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.generate-btn:active {
+  transform: translateY(0);
+  animation: pulse 0.3s ease;
 }
 
 /* Password Display */
@@ -274,10 +395,16 @@ input[type="range"]::-webkit-slider-thumb {
   display: none;
   flex-direction: column;
   margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
 }
 
 #password-container.show {
   display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .password-display {
@@ -303,11 +430,19 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   font-size: 1.2em;
   opacity: 0.6;
-  transition: opacity 0.3s;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .copy-btn:hover {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.copy-btn:active {
+  animation: pulse 0.2s ease;
 }
 
 .toast {
@@ -403,6 +538,11 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: 0 5px 15px rgba(0, 191, 114, 0.4);
 }
 
+.chess-btn.primary:active {
+  transform: translateY(0);
+  animation: pulse 0.2s ease;
+}
+
 .chess-btn.secondary {
   background: rgba(0, 135, 147, 0.3);
   color: rgba(255, 255, 255, 0.9);
@@ -413,6 +553,11 @@ input[type="range"]::-webkit-slider-thumb {
   background: rgba(0, 135, 147, 0.5);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.chess-btn.secondary:active {
+  transform: translateY(0);
+  animation: pulse 0.2s ease;
 }
 
 #chessboard {
