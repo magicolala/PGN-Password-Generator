@@ -269,6 +269,25 @@
       </div>
 
       <div class="instruction-item">
+        <h4><i class="fas fa-cogs"></i> L'algorithme de génération en détail</h4>
+        <p>La transformation de votre partie d'échecs en mot de passe suit un processus rigoureux et transparent :</p>
+        <ol style="padding-left: 40px; margin-top: 10px;">
+          <li style="margin-bottom: 10px;"><strong>Nettoyage du PGN :</strong> Seule la séquence brute des coups est conservée (ex: <code>e4 e5 Nf3 Nc6...</code>). Les en-têtes (joueurs, date), les commentaires, les numéros de coups et le résultat sont retirés. Cela garantit que seul le déroulement du jeu influence le mot de passe.</li>
+          <li style="margin-bottom: 10px;"><strong>Hashing SHA-256 :</strong> La séquence de coups nettoyée est convertie en une empreinte numérique unique de 256 bits (32 octets) via l'algorithme de hachage sécurisé SHA-256. Cette opération est à sens unique : il est cryptographiquement impossible de retrouver la partie à partir de son empreinte.</li>
+          <li style="margin-bottom: 10px;"><strong>Construction du mot de passe :</strong> L'empreinte de 32 octets est utilisée comme une source d'aléa déterministe pour choisir les caractères :
+            <ul>
+              <li>Pour garantir la complexité, les 4 premiers octets sont utilisés pour générer <strong>une majuscule, une minuscule, un chiffre et un caractère spécial</strong>.</li>
+              <li>Les octets suivants sont utilisés pour générer le reste des caractères du mot de passe jusqu'à atteindre la longueur désirée.</li>
+            </ul>
+          </li>
+          <li><strong>Mélange et finalisation :</strong> Les caractères sont ensuite mélangés (toujours de la même manière pour une même partie) pour que les premiers caractères ne soient pas prévisibles. Le mot de passe est finalement tronqué à la longueur que vous avez choisie.</li>
+        </ol>
+        <div class="security-tip" style="margin-top: 15px;">
+          <p><i class="fas fa-shield-alt"></i> Ce processus garantit que même une modification mineure dans la partie (un seul coup différent) produit un mot de passe complètement différent.</p>
+        </div>
+      </div>
+
+      <div class="instruction-item">
         <h4><i class="fas fa-lightbulb"></i> Conseils d'utilisation</h4>
         <ul>
           <li>Sauvegardez vos parties PGN importantes dans un endroit sûr</li>
