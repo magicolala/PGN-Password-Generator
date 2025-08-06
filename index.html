@@ -37,11 +37,34 @@
     }
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1200px;
       background: rgba(0, 0, 0, 0.4);
       padding: 40px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .main-content {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .left-panel {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .right-panel {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+        gap: 20px;
+      }
     }
     h1 {
       font-size: 2.5em;
@@ -159,10 +182,10 @@
     }
     
     .chess-section {
-        margin-top: 30px;
         padding: 20px;
         background: rgba(0, 0, 0, 0.3);
         border-radius: 10px;
+        height: fit-content;
     }
     
     .chess-controls {
@@ -190,7 +213,8 @@
     
     #chessboard {
         margin: 0 auto;
-        max-width: 400px;
+        max-width: 100%;
+        width: 100%;
     }
     
     .board-container {
@@ -325,33 +349,39 @@
 <body>
   <div class="container">
     <h1>PGN Password Generator</h1>
-    <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
-    <div class="controls">
-      <div class="slider-container">
-        <p>Password Length: <span id="length-label">16</span></p>
-        <input type="range" id="length" min="8" max="32" value="16">
-      </div>
-      <div class="discrete-mode">
-        <label>
-          <input type="checkbox" id="discrete-mode"> 
-          <i class="fas fa-eye-slash"></i> 
-          Mode discret (masquer le mot de passe)
-        </label>
-      </div>
-      <button class="generate-btn" onclick="generate()">
-        <i class="fas fa-rocket"></i> Generate
-      </button>
-    </div>
-    <div id="password-container">
-      <div class="password-display">
-        <span id="password-text"></span>
-        <button class="copy-btn" onclick="copyPassword()">
-          <i class="fas fa-copy"></i>
-        </button>
-      </div>
-    </div>
     
-    <div class="chess-section">
+    <div class="main-content">
+      <div class="left-panel">
+        <h2><i class="fas fa-edit"></i> PGN Input</h2>
+        <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
+        <div class="controls">
+          <div class="slider-container">
+            <p>Password Length: <span id="length-label">16</span></p>
+            <input type="range" id="length" min="8" max="32" value="16">
+          </div>
+          <div class="discrete-mode">
+            <label>
+              <input type="checkbox" id="discrete-mode"> 
+              <i class="fas fa-eye-slash"></i> 
+              Mode discret (masquer le mot de passe)
+            </label>
+          </div>
+          <button class="generate-btn" onclick="generate()">
+            <i class="fas fa-rocket"></i> Generate
+          </button>
+        </div>
+        <div id="password-container">
+          <div class="password-display">
+            <span id="password-text"></span>
+            <button class="copy-btn" onclick="copyPassword()">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <div class="chess-section">
       <h2><i class="fas fa-chess"></i> Chess Board</h2>
       <div class="chess-controls">
         <button class="chess-btn" onclick="loadPgnToBoard()">
@@ -387,6 +417,8 @@
       </div>
       <div class="board-container">
         <div id="chessboard"></div>
+      </div>
+        </div>
       </div>
     </div>
     
