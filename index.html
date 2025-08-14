@@ -243,12 +243,17 @@
 
         <p><strong>Pour ton mot de passe :</strong><br>
           Même une petite partie de 10 coups représente déjà une base incroyablement unique. Si tu utilises une partie
-          que tu connais par cœur, personne ne pourra jamais la deviner.</p>
+          que tu connais par cœur, personne ne pourra jamais la deviner.
+        </p>
 
         <div class="security-tip">
           <p><i class="fas fa-rocket"></i>
             <strong>Résultat :</strong> un mot de passe unique, reproductible, et d'une sécurité maximale. Change un
             seul coup → mot de passe complètement différent !
+          </p>
+          <p style="margin-top:8px; font-style:italic;">
+            ⚠️ Conseil d’ami : évite de baser ton mot de passe sur un mat du berger… c’est court, prévisible, et tous
+            les joueurs un peu sérieux le connaissent déjà 😏
           </p>
         </div>
       </div>
@@ -290,7 +295,8 @@
         <p>Tu te demandes comment ça marche techniquement ? Voici le processus :</p>
         <ol style="padding-left: 20px; margin-top: 10px;">
           <li style="margin-bottom: 8px;"><strong>Nettoyage :</strong> On garde uniquement les coups (ex:
-            <code>e4 e5 Nf3...</code>). Les commentaires, noms de joueurs, etc. sont ignorés.</li>
+            <code>e4 e5 Nf3...</code>). Les commentaires, noms de joueurs, etc. sont ignorés.
+          </li>
           <li style="margin-bottom: 8px;"><strong>Cryptographie :</strong> Ta séquence de coups passe dans l'algorithme
             SHA-256 (standard militaire) pour créer une empreinte unique.</li>
           <li style="margin-bottom: 8px;"><strong>Construction :</strong> Cette empreinte génère ton mot de passe avec
