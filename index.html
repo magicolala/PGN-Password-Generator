@@ -226,6 +226,23 @@
       </div>
 
       <div class="instruction-item">
+        <h4><i class="fas fa-calculator"></i> Le Nombre de Shannon en Détail</h4>
+        <p>Le <strong>nombre de Shannon</strong>, estimé à 10<sup>120</sup>, représente une approximation du nombre de
+          parties d'échecs "raisonnables" ou ayant un sens échiquéen. Il ne doit pas être confondu avec le nombre total
+          de parties légales possibles, qui est encore plus grand.</p>
+        <p><strong>Comment est-il calculé ?</strong> Claude Shannon, le père de la théorie de l'information, l'a obtenu
+          en estimant qu'à chaque tour, un joueur a en moyenne 30 choix pertinents. Pour une partie de 40 coups (soit 80
+          demi-coups), cela donne (30 × 30)<sup>40</sup>, ce qui équivaut à environ 10<sup>120</sup>.</p>
+        <p>Des estimations plus récentes placent le nombre de parties possibles autour de 10<sup>123</sup>. C'est la
+          règle des 50 coups (partie nulle si aucun pion n'est poussé et aucune pièce n'est capturée pendant 50 coups
+          consécutifs) qui limite considérablement le nombre total de parties possibles.</p>
+        <div class="security-tip">
+          <p><i class="fas fa-infinity"></i> Cette complexité quasi-infinie est ce qui rend votre partie d'échecs une
+            base si solide et unique pour un mot de passe.</p>
+        </div>
+      </div>
+
+      <div class="instruction-item">
         <h4><i class="fas fa-paste"></i> Méthode 1 : Coller un PGN existant</h4>
         <p>Si vous avez déjà une partie au format PGN :</p>
         <ul>
@@ -272,18 +289,30 @@
         <h4><i class="fas fa-cogs"></i> L'algorithme de génération en détail</h4>
         <p>La transformation de votre partie d'échecs en mot de passe suit un processus rigoureux et transparent :</p>
         <ol style="padding-left: 40px; margin-top: 10px;">
-          <li style="margin-bottom: 10px;"><strong>Nettoyage du PGN :</strong> Seule la séquence brute des coups est conservée (ex: <code>e4 e5 Nf3 Nc6...</code>). Les en-têtes (joueurs, date), les commentaires, les numéros de coups et le résultat sont retirés. Cela garantit que seul le déroulement du jeu influence le mot de passe.</li>
-          <li style="margin-bottom: 10px;"><strong>Hashing SHA-256 :</strong> La séquence de coups nettoyée est convertie en une empreinte numérique unique de 256 bits (32 octets) via l'algorithme de hachage sécurisé SHA-256. Cette opération est à sens unique : il est cryptographiquement impossible de retrouver la partie à partir de son empreinte.</li>
-          <li style="margin-bottom: 10px;"><strong>Construction du mot de passe :</strong> L'empreinte de 32 octets est utilisée comme une source d'aléa déterministe pour choisir les caractères :
+          <li style="margin-bottom: 10px;"><strong>Nettoyage du PGN :</strong> Seule la séquence brute des coups est
+            conservée (ex: <code>e4 e5 Nf3 Nc6...</code>). Les en-têtes (joueurs, date), les commentaires, les numéros
+            de coups et le résultat sont retirés. Cela garantit que seul le déroulement du jeu influence le mot de
+            passe.</li>
+          <li style="margin-bottom: 10px;"><strong>Hashing SHA-256 :</strong> La séquence de coups nettoyée est
+            convertie en une empreinte numérique unique de 256 bits (32 octets) via l'algorithme de hachage sécurisé
+            SHA-256. Cette opération est à sens unique : il est cryptographiquement impossible de retrouver la partie à
+            partir de son empreinte.</li>
+          <li style="margin-bottom: 10px;"><strong>Construction du mot de passe :</strong> L'empreinte de 32 octets est
+            utilisée comme une source d'aléa déterministe pour choisir les caractères :
             <ul>
-              <li>Pour garantir la complexité, les 4 premiers octets sont utilisés pour générer <strong>une majuscule, une minuscule, un chiffre et un caractère spécial</strong>.</li>
-              <li>Les octets suivants sont utilisés pour générer le reste des caractères du mot de passe jusqu'à atteindre la longueur désirée.</li>
+              <li>Pour garantir la complexité, les 4 premiers octets sont utilisés pour générer <strong>une majuscule,
+                  une minuscule, un chiffre et un caractère spécial</strong>.</li>
+              <li>Les octets suivants sont utilisés pour générer le reste des caractères du mot de passe jusqu'à
+                atteindre la longueur désirée.</li>
             </ul>
           </li>
-          <li><strong>Mélange et finalisation :</strong> Les caractères sont ensuite mélangés (toujours de la même manière pour une même partie) pour que les premiers caractères ne soient pas prévisibles. Le mot de passe est finalement tronqué à la longueur que vous avez choisie.</li>
+          <li><strong>Mélange et finalisation :</strong> Les caractères sont ensuite mélangés (toujours de la même
+            manière pour une même partie) pour que les premiers caractères ne soient pas prévisibles. Le mot de passe
+            est finalement tronqué à la longueur que vous avez choisie.</li>
         </ol>
         <div class="security-tip" style="margin-top: 15px;">
-          <p><i class="fas fa-shield-alt"></i> Ce processus garantit que même une modification mineure dans la partie (un seul coup différent) produit un mot de passe complètement différent.</p>
+          <p><i class="fas fa-shield-alt"></i> Ce processus garantit que même une modification mineure dans la partie
+            (un seul coup différent) produit un mot de passe complètement différent.</p>
         </div>
       </div>
 

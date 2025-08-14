@@ -44,6 +44,19 @@ Visit the live demo: [PGN Password Generator](https://magicolala.github.io/PGN-P
 4. **Generation** - Convert hash into a secure password with guaranteed character variety
 5. **Output** - Display password with copy-to-clipboard functionality
 
+## 🎲 Why Chess Games? The Shannon Number
+
+The core idea of this tool rests on the incredible complexity of chess. The number of possible "meaningful" chess games is estimated by the **Shannon number**, which is approximately **10<sup>120</sup>**.
+
+To put this into perspective, the number of atoms in the observable universe is estimated to be around 10<sup>80</sup>.
+
+### How is the Shannon Number Calculated?
+Claude Shannon, the father of information theory, estimated that in a typical chess position, a player has an average of about 30 meaningful moves. For an average game length of 40 moves (for each player), the number of possibilities would be (30 * 30)<sup>40</sup>, which simplifies to 10<sup>120</sup>.
+
+It's important to note that this isn't the number of *all legal* games (which is much higher), but rather a measure of the game-tree complexity for strategically significant games. The 50-move rule is one of the key factors that prevents the number of possible games from being truly infinite. This astronomical number ensures that any given chess game you play is almost certainly unique, making it a perfect, memorable foundation for a strong password.
+
+Recent estimates place the number of possible games even higher, around 10<sup>123</sup>, and the number of legal positions at 4.5×10<sup>46</sup>.
+
 ## 🎮 Usage Guide
 
 ### Method 1: Load Existing PGN
