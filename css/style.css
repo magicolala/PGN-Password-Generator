@@ -1576,7 +1576,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   opacity:1; transform: scale(1);
 }
 
-
 /* 8) Loader : évite background-position animé, passe sur transform du contenu */
 .loader-container{
   animation: none; /* on retire backgroundShift coûteux */
