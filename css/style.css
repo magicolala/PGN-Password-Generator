@@ -686,7 +686,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .generate-btn:hover {
-  background-position: 100% 0;
   animation: buttonHover 0.4s ease forwards;
   box-shadow:
     0 20px 50px rgba(168, 235, 18, 0.6),
