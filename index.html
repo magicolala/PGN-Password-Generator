@@ -106,7 +106,7 @@
         <img src="favicon-32x32.png" alt="Logo PGN Password Generator" class="logo">
         <div class="header-text">
           <h1>Générateur de Mot de Passe PGN</h1>
-          <p class="hero-subtitle">Transformez vos parties d'échecs en mots de passe cryptographiquement sécurisés</p>
+          <p class="hero-subtitle">Transforme tes parties d'échecs en mots de passe cryptographiquement sécurisés</p>
         </div>
       </div>
     </header>
@@ -226,21 +226,53 @@
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-calculator"></i> Le Nombre de Shannon en Détail</h4>
-        <p>Le <strong>nombre de Shannon</strong>, estimé à 10<sup>120</sup>, représente une approximation du nombre de
-          parties d'échecs "raisonnables" ou ayant un sens échiquéen. Il ne doit pas être confondu avec le nombre total
-          de parties légales possibles, qui est encore plus grand.</p>
-        <p><strong>Comment est-il calculé ?</strong> Claude Shannon, le père de la théorie de l'information, l'a obtenu
-          en estimant qu'à chaque tour, un joueur a en moyenne 30 choix pertinents. Pour une partie de 40 coups (soit 80
-          demi-coups), cela donne (30 × 30)<sup>40</sup>, ce qui équivaut à environ 10<sup>120</sup>.</p>
-        <p>Des estimations plus récentes placent le nombre de parties possibles autour de 10<sup>123</sup>. C'est la
-          règle des 50 coups (partie nulle si aucun pion n'est poussé et aucune pièce n'est capturée pendant 50 coups
-          consécutifs) qui limite considérablement le nombre total de parties possibles.</p>
+        <h4><i class="fas fa-calculator"></i> Le « nombre de Shannon » et pourquoi c’est énorme</h4>
+        <p>
+          L’idée derrière cette application repose sur un fait simple : <strong>les échecs sont d’une complexité
+            monstrueuse</strong>.
+          Le mathématicien Claude Shannon, père de la théorie de l’information, a estimé qu’il existait environ
+          <strong>10<sup>120</sup></strong> parties d’échecs « raisonnables » possibles. C’est ce qu’on appelle le
+          <em>nombre de Shannon</em>.
+        </p>
+
+        <p><strong>Pourquoi c’est si gros ?</strong><br>
+          • Dès le <strong>premier coup</strong>, les Blancs ont 20 options légales, les Noirs en ont 20 aussi :
+          <code>20 × 20 = 400</code> parties possibles.<br>
+          • Après seulement <strong>2 coups par joueur</strong> (4 demi-coups), on dépasse déjà
+          <code>400 × ~30 × ~30 ≈ 360 000</code> parties possibles.<br>
+          • Au bout de <strong>4 coups par joueur</strong> (8 demi-coups), on est déjà dans l’ordre de
+          <strong>trillions</strong> de parties différentes.<br>
+          • En moyenne, chaque position offre ~30 coups pertinents. Pour une partie standard de 40 coups par joueur (80
+          demi-coups) :
+          <code>30<sup>80</sup> ≈ 10<sup>118</sup></code>, souvent arrondi à <strong>10<sup>120</sup></strong>.
+        </p>
+
+        <p><strong>Et pour ton mot de passe ?</strong><br>
+          Ça veut dire que <em>même une partie courte inventée par toi</em> représente déjà une graine incroyablement
+          unique.
+          Si tu utilises une partie que tu connais par cœur, personne ne pourra la deviner par force brute, car
+          l’espace de recherche est colossal dès les premiers coups.
+        </p>
+
         <div class="security-tip">
-          <p><i class="fas fa-infinity"></i> Cette complexité quasi-infinie est ce qui rend votre partie d'échecs une
-            base si solide et unique pour un mot de passe.</p>
+          <p><i class="fas fa-infinity"></i>
+            Résultat : un mot de passe généré depuis ton PGN est unique, reproductible, et d’une complexité
+            quasi-infinie.
+            Une variation d’un seul coup ⇒ un mot de passe complètement différent.
+          </p>
         </div>
+
+        <details style="margin-top:10px;">
+          <summary>Pour les curieux</summary>
+          <ul>
+            <li>C. E. Shannon (1950), <em>Programming a Computer for Playing Chess</em></li>
+            <li>Victor Allis (1994), <em>Searching for Solutions in Games</em> — ~10<sup>123</sup></li>
+            <li>Article <em>Pour la Science</em> — loi de puissance appliquée aux échecs</li>
+          </ul>
+        </details>
       </div>
+
+
 
       <div class="instruction-item">
         <h4><i class="fas fa-paste"></i> Méthode 1 : Coller un PGN existant</h4>
