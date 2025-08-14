@@ -90,7 +90,7 @@
       </div>
       <div class="loader-text">
         <h2>Générateur PGN</h2>
-        <p>Chargement en cours...</p>
+        <p>Préparation de ton générateur...</p>
         <div class="loading-dots">
           <span></span>
           <span></span>
@@ -106,20 +106,20 @@
         <img src="favicon-32x32.png" alt="Logo PGN Password Generator" class="logo">
         <div class="header-text">
           <h1>Générateur de Mot de Passe PGN</h1>
-          <p class="hero-subtitle">Transforme tes parties d'échecs en mots de passe cryptographiquement sécurisés</p>
+          <p class="hero-subtitle">Transforme tes parties d'échecs en mots de passe ultra-sécurisés ♜</p>
         </div>
       </div>
     </header>
 
     <main class="main-content">
       <section class="left-panel">
-        <h2><i class="fas fa-edit"></i> Saisie PGN</h2>
+        <h2><i class="fas fa-edit"></i> Ta Partie d'Échecs</h2>
 
         <div class="pgn-input-section">
           <div class="file-upload-container">
             <input type="file" id="pgnFileInput" accept=".pgn,.txt" style="display: none;">
             <button class="file-upload-btn" onclick="document.getElementById('pgnFileInput').click()">
-              <i class="fas fa-file-upload"></i> Charger un fichier PGN
+              <i class="fas fa-file-upload"></i> Importer un fichier PGN
             </button>
             <span class="file-name" id="fileName"></span>
           </div>
@@ -128,23 +128,24 @@
             <span>ou</span>
           </div>
 
-          <textarea id="pgnInput" placeholder="Colle ici ton PGN..."></textarea>
+          <textarea id="pgnInput"
+            placeholder="Colle ici le PGN de ta partie favorite...&#10;Exemple : 1. e4 e5 2. Nf3 Nc6 3. Bc4..."></textarea>
         </div>
 
         <div class="controls">
           <div class="slider-container">
-            <p>Longueur du mot de passe : <span id="length-label">16</span></p>
+            <p>Longueur de ton mot de passe : <span id="length-label">16</span> caractères</p>
             <input type="range" id="length" min="8" max="32" value="16">
           </div>
           <div class="discrete-mode">
             <label>
               <input type="checkbox" id="discrete-mode">
               <i class="fas fa-eye-slash"></i>
-              Mode discret (masquer le mot de passe)
+              Mode ninja (masquer le mot de passe)
             </label>
           </div>
           <button class="generate-btn" onclick="generate()">
-            <i class="fas fa-rocket"></i> Générer
+            <i class="fas fa-magic"></i> Générer mon mot de passe
           </button>
         </div>
         <div id="password-container">
@@ -161,21 +162,21 @@
         <div class="chess-section">
           <div class="chess-header">
             <h3><i class="fas fa-chess"></i> Échiquier Interactif</h3>
-            <p class="chess-description">Jouez directement sur l'échiquier ou chargez un PGN existant</p>
+            <p class="chess-description">Joue directement ici ou charge une partie existante</p>
           </div>
 
           <div class="chess-controls">
             <div class="control-group">
               <button class="chess-btn primary" onclick="loadPgnToBoard()">
-                <i class="fas fa-upload"></i> Charger le PGN
+                <i class="fas fa-upload"></i> Charger la partie
               </button>
               <button class="chess-btn secondary" onclick="clearBoard()">
-                <i class="fas fa-trash"></i> Vider
+                <i class="fas fa-broom"></i> Tout effacer
               </button>
             </div>
             <div class="control-group">
               <button class="chess-btn secondary" onclick="resetBoard()">
-                <i class="fas fa-undo"></i> Réinitialiser
+                <i class="fas fa-undo"></i> Recommencer
               </button>
               <button class="chess-btn secondary" onclick="flipBoard()">
                 <i class="fas fa-sync-alt"></i> Retourner
@@ -184,7 +185,7 @@
           </div>
 
           <div class="move-navigation">
-            <p><strong>Navigation des coups :</strong> <span id="move-info">Position initiale</span></p>
+            <p><strong>Navigation :</strong> <span id="move-info">Position de départ</span></p>
             <div class="nav-controls">
               <button class="chess-btn" onclick="goToStart()">
                 <i class="fas fa-fast-backward"></i> Début
@@ -201,167 +202,133 @@
             </div>
           </div>
           <div class="board-container">
-            <div id="chessboard" role="img" aria-label="Échiquier interactif pour visualiser les parties PGN"></div>
+            <div id="chessboard" role="img" aria-label="Échiquier interactif pour créer et visualiser tes parties">
+            </div>
           </div>
         </div>
       </section>
     </main>
 
     <section class="instructions-section">
-      <h2><i class="fas fa-info-circle"></i> Guide d'Utilisation du Générateur</h2>
+      <h2><i class="fas fa-info-circle"></i> Comment ça marche ?</h2>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-key"></i> Qu'est-ce que c'est ?</h4>
-        <p>Ce générateur transforme n'importe quelle partie d'échecs (au format PGN) en un mot de passe
-          cryptographiquement sécurisé. Chaque partie unique génère un mot de passe unique et reproductible.</p>
-        <p>Le jeu d'échecs est d'une complexité astronomique. Le nombre de parties possibles est estimé à
-          10<sup>120</sup>, un chiffre connu sous le nom de "nombre de Shannon". C'est bien plus que le nombre d'atomes
-          dans l'univers observable ! Cette immensité garantit que chaque partie que vous jouez est pratiquement unique,
-          faisant d'elle une base parfaite pour un mot de passe que vous seul pouvez recréer.</p>
+        <h4><i class="fas fa-lightbulb"></i> L'idée derrière ce générateur</h4>
+        <p>Tu joues aux échecs ? Parfait ! Chaque partie que tu joues est unique au monde. Ce générateur transforme
+          n'importe laquelle de tes parties en un mot de passe super sécurisé que toi seul peux recréer.</p>
+        <p>Les échecs, c'est d'une complexité folle. Il existe environ <strong>10<sup>120</sup></strong> parties
+          possibles – c'est le fameux "nombre de Shannon". Pour te donner une idée, c'est plus que le nombre d'atomes
+          dans tout l'univers visible ! 🤯</p>
 
         <div class="security-tip">
-          <p><i class="fas fa-shield-alt"></i> Avantage : Vos mots de passe sont basés sur vos parties d'échecs
-            mémorables !</p>
+          <p><i class="fas fa-shield-alt"></i> <strong>Le truc génial :</strong> tes mots de passe sont basés sur tes
+            parties mémorables. Impossible à deviner, facile à retenir pour toi !</p>
         </div>
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-calculator"></i> Le « nombre de Shannon » et pourquoi c’est énorme</h4>
+        <h4><i class="fas fa-infinity"></i> Pourquoi les échecs sont parfaits pour ça</h4>
         <p>
-          L’idée derrière cette application repose sur un fait simple : <strong>les échecs sont d’une complexité
-            monstrueuse</strong>.
-          Le mathématicien Claude Shannon, père de la théorie de l’information, a estimé qu’il existait environ
-          <strong>10<sup>120</sup></strong> parties d’échecs « raisonnables » possibles. C’est ce qu’on appelle le
-          <em>nombre de Shannon</em>.
+          Claude Shannon (le père de l'informatique moderne) a calculé qu'il y a environ
+          <strong>10<sup>120</sup></strong> parties d'échecs "raisonnables" possibles. C'est astronomique !
         </p>
 
-        <p><strong>Pourquoi c’est si gros ?</strong><br>
-          • Dès le <strong>premier coup</strong>, les Blancs ont 20 options légales, les Noirs en ont 20 aussi :
-          <code>20 × 20 = 400</code> parties possibles.<br>
-          • Après seulement <strong>2 coups par joueur</strong> (4 demi-coups), on dépasse déjà
-          <code>400 × ~30 × ~30 ≈ 360 000</code> parties possibles.<br>
-          • Au bout de <strong>4 coups par joueur</strong> (8 demi-coups), on est déjà dans l’ordre de
-          <strong>trillions</strong> de parties différentes.<br>
-          • En moyenne, chaque position offre ~30 coups pertinents. Pour une partie standard de 40 coups par joueur (80
-          demi-coups) :
-          <code>30<sup>80</sup> ≈ 10<sup>118</sup></code>, souvent arrondi à <strong>10<sup>120</sup></strong>.
-        </p>
+        <p><strong>Concrètement, ça donne quoi ?</strong></p>
+        <ul style="margin-left: 20px;">
+          <li>Dès le premier coup : 20 options pour les blancs × 20 pour les noirs = <strong>400 parties
+              possibles</strong></li>
+          <li>Après seulement 4 coups chacun : déjà des <strong>millions de milliards</strong> de possibilités</li>
+          <li>Une partie complète ? Littéralement plus de combinaisons que d'étoiles dans l'univers ✨</li>
+        </ul>
 
-        <p><strong>Et pour ton mot de passe ?</strong><br>
-          Ça veut dire que <em>même une partie courte inventée par toi</em> représente déjà une graine incroyablement
-          unique.
-          Si tu utilises une partie que tu connais par cœur, personne ne pourra la deviner par force brute, car
-          l’espace de recherche est colossal dès les premiers coups.
-        </p>
+        <p><strong>Pour ton mot de passe :</strong><br>
+          Même une petite partie de 10 coups représente déjà une base incroyablement unique. Si tu utilises une partie
+          que tu connais par cœur, personne ne pourra jamais la deviner.</p>
 
         <div class="security-tip">
-          <p><i class="fas fa-infinity"></i>
-            Résultat : un mot de passe généré depuis ton PGN est unique, reproductible, et d’une complexité
-            quasi-infinie.
-            Une variation d’un seul coup ⇒ un mot de passe complètement différent.
+          <p><i class="fas fa-rocket"></i>
+            <strong>Résultat :</strong> un mot de passe unique, reproductible, et d'une sécurité maximale. Change un
+            seul coup → mot de passe complètement différent !
           </p>
         </div>
-
-        <details style="margin-top:10px;">
-          <summary>Pour les curieux</summary>
-          <ul>
-            <li>C. E. Shannon (1950), <em>Programming a Computer for Playing Chess</em></li>
-            <li>Victor Allis (1994), <em>Searching for Solutions in Games</em> — ~10<sup>123</sup></li>
-            <li>Article <em>Pour la Science</em> — loi de puissance appliquée aux échecs</li>
-          </ul>
-        </details>
       </div>
 
-
-
       <div class="instruction-item">
-        <h4><i class="fas fa-paste"></i> Méthode 1 : Coller un PGN existant</h4>
-        <p>Si vous avez déjà une partie au format PGN :</p>
+        <h4><i class="fas fa-play"></i> Méthode 1 : J'ai déjà une partie</h4>
+        <p>Tu as une partie favorite ou un PGN sous la main ?</p>
         <ul>
-          <li>Collez votre PGN dans la zone de texte</li>
-          <li>Ajustez la longueur du mot de passe (8-32 caractères)</li>
-          <li>Cliquez sur "Generate" pour créer votre mot de passe</li>
-          <li>Optionnel : Cliquez "Load PGN to Board" pour visualiser la partie</li>
+          <li>Colle ton PGN dans la zone de texte (ou importe un fichier)</li>
+          <li>Choisis la longueur de ton mot de passe (8 à 32 caractères)</li>
+          <li>Clique sur "Générer" et voilà ! 🎉</li>
+          <li><em>Bonus :</em> tu peux visualiser ta partie sur l'échiquier</li>
         </ul>
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-chess-knight"></i> Méthode 2 : Jouer une partie sur le board</h4>
-        <p>Pour créer une nouvelle partie directement :</p>
+        <h4><i class="fas fa-chess-knight"></i> Méthode 2 : Je crée une nouvelle partie</h4>
+        <p>Envie de jouer quelques coups ?</p>
         <ul>
-          <li>Utilisez le board d'échecs ci-dessus pour jouer vos coups</li>
-          <li>Déplacez les pièces en cliquant et glissant (drag & drop)</li>
-          <li>Le PGN se génère automatiquement dans la zone de texte</li>
-          <li>Cliquez "Generate" quand vous êtes satisfait de votre partie</li>
+          <li>Utilise l'échiquier ci-dessus pour jouer tes coups favoris</li>
+          <li>Glisse-dépose les pièces comme bon te semble</li>
+          <li>Le PGN se génère automatiquement pendant que tu joues</li>
+          <li>Quand tu es satisfait, génère ton mot de passe !</li>
         </ul>
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-eye"></i> Navigation dans une partie</h4>
-        <p>Une fois qu'une partie est chargée sur le board :</p>
+        <h4><i class="fas fa-film"></i> Revivre une partie</h4>
+        <p>Une fois ta partie chargée :</p>
         <ul>
-          <li>Utilisez les boutons "Start", "Previous", "Next", "End" pour naviguer</li>
-          <li>Observez les coups joués étape par étape</li>
-          <li>Le compteur de coups s'affiche en temps réel</li>
+          <li>Navigue coup par coup avec les boutons de contrôle</li>
+          <li>Revois tes plus belles combinaisons étape par étape</li>
+          <li>Parfait pour analyser ou mémoriser une partie</li>
         </ul>
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-lock"></i> Sécurité & Reproductibilité</h4>
-        <p>Points importants à retenir :</p>
-        <ul>
-          <li><strong>Déterministe</strong> : La même partie PGN génère toujours le même mot de passe</li>
-          <li><strong>Cryptographiquement sécurisé</strong> : Utilise SHA-256 pour le hashing</li>
-          <li><strong>Unique</strong> : Chaque partie différente = mot de passe différent</li>
-          <li><strong>Mode discret</strong> : Option pour masquer le mot de passe à l'écran</li>
-        </ul>
-      </div>
-
-      <div class="instruction-item">
-        <h4><i class="fas fa-cogs"></i> L'algorithme de génération en détail</h4>
-        <p>La transformation de votre partie d'échecs en mot de passe suit un processus rigoureux et transparent :</p>
-        <ol style="padding-left: 40px; margin-top: 10px;">
-          <li style="margin-bottom: 10px;"><strong>Nettoyage du PGN :</strong> Seule la séquence brute des coups est
-            conservée (ex: <code>e4 e5 Nf3 Nc6...</code>). Les en-têtes (joueurs, date), les commentaires, les numéros
-            de coups et le résultat sont retirés. Cela garantit que seul le déroulement du jeu influence le mot de
-            passe.</li>
-          <li style="margin-bottom: 10px;"><strong>Hashing SHA-256 :</strong> La séquence de coups nettoyée est
-            convertie en une empreinte numérique unique de 256 bits (32 octets) via l'algorithme de hachage sécurisé
-            SHA-256. Cette opération est à sens unique : il est cryptographiquement impossible de retrouver la partie à
-            partir de son empreinte.</li>
-          <li style="margin-bottom: 10px;"><strong>Construction du mot de passe :</strong> L'empreinte de 32 octets est
-            utilisée comme une source d'aléa déterministe pour choisir les caractères :
-            <ul>
-              <li>Pour garantir la complexité, les 4 premiers octets sont utilisés pour générer <strong>une majuscule,
-                  une minuscule, un chiffre et un caractère spécial</strong>.</li>
-              <li>Les octets suivants sont utilisés pour générer le reste des caractères du mot de passe jusqu'à
-                atteindre la longueur désirée.</li>
-            </ul>
-          </li>
-          <li><strong>Mélange et finalisation :</strong> Les caractères sont ensuite mélangés (toujours de la même
-            manière pour une même partie) pour que les premiers caractères ne soient pas prévisibles. Le mot de passe
-            est finalement tronqué à la longueur que vous avez choisie.</li>
+        <h4><i class="fas fa-cogs"></i> La magie derrière le rideau</h4>
+        <p>Tu te demandes comment ça marche techniquement ? Voici le processus :</p>
+        <ol style="padding-left: 20px; margin-top: 10px;">
+          <li style="margin-bottom: 8px;"><strong>Nettoyage :</strong> On garde uniquement les coups (ex:
+            <code>e4 e5 Nf3...</code>). Les commentaires, noms de joueurs, etc. sont ignorés.</li>
+          <li style="margin-bottom: 8px;"><strong>Cryptographie :</strong> Ta séquence de coups passe dans l'algorithme
+            SHA-256 (standard militaire) pour créer une empreinte unique.</li>
+          <li style="margin-bottom: 8px;"><strong>Construction :</strong> Cette empreinte génère ton mot de passe avec
+            majuscules, minuscules, chiffres et caractères spéciaux.</li>
+          <li><strong>Mélange :</strong> Tout est mélangé de façon déterministe pour maximiser la sécurité.</li>
         </ol>
         <div class="security-tip" style="margin-top: 15px;">
-          <p><i class="fas fa-shield-alt"></i> Ce processus garantit que même une modification mineure dans la partie
-            (un seul coup différent) produit un mot de passe complètement différent.</p>
+          <p><i class="fas fa-lock"></i> <strong>Garanti :</strong> même changer un seul coup produit un mot de passe
+            complètement différent !</p>
         </div>
       </div>
 
       <div class="instruction-item">
-        <h4><i class="fas fa-lightbulb"></i> Conseils d'utilisation</h4>
+        <h4><i class="fas fa-shield-alt"></i> Sécurité & bonnes pratiques</h4>
+        <p>Ce qu'il faut retenir :</p>
         <ul>
-          <li>Sauvegardez vos parties PGN importantes dans un endroit sûr</li>
-          <li>Utilisez des parties mémorables pour vous souvenir du mot de passe</li>
-          <li>Variez la longueur selon vos besoins de sécurité</li>
-          <li>Le mode discret est recommandé dans les espaces publics</li>
+          <li><strong>✅ Reproductible :</strong> La même partie = toujours le même mot de passe</li>
+          <li><strong>✅ Sécurisé :</strong> Utilise le standard cryptographique SHA-256</li>
+          <li><strong>✅ Unique :</strong> Chaque partie différente = mot de passe différent</li>
+          <li><strong>✅ Discret :</strong> Active le mode ninja dans les lieux publics</li>
+        </ul>
+      </div>
+
+      <div class="instruction-item">
+        <h4><i class="fas fa-tips"></i> Nos conseils de pro</h4>
+        <ul>
+          <li>💾 Sauvegarde tes parties importantes quelque part de sûr</li>
+          <li>🧠 Utilise des parties que tu peux facilement retenir</li>
+          <li>📏 Adapte la longueur selon tes besoins (16+ caractères recommandés)</li>
+          <li>🥷 Pense au mode ninja quand tu es en public</li>
+          <li>🎯 Une partie courte mais mémorable vaut mieux qu'une longue partie oubliée</li>
         </ul>
       </div>
     </section>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="toast" role="alert" aria-live="polite">Mot de passe copié !</div>
+  <div id="toast" class="toast" role="alert" aria-live="polite">Mot de passe copié dans ton presse-papier ! 🎉</div>
 
   <!-- External Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
