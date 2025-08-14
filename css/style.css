@@ -638,7 +638,6 @@ input[type="range"]::-webkit-slider-thumb {
   background: rgba(168, 235, 18, 0.1);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-left: 4px solid #a8eb12;
 }
 
 .instructions-section h3 {
@@ -785,7 +784,7 @@ input[type="range"]::-webkit-slider-thumb {
 .chess-piece {
   font-size: 3em;
   color: #a8eb12;
-  text-shadow: 0 0 20px rgba(168, 235, 18, 0.6), 0 0 40px rgba(168, 235, 18, 0.4);
+  text-shadow: 0 0 20px rgba(168, 235, 18, 0.6), 0 0 40px rgba(166, 172, 153, 0.4);
   animation: chessFloat 3s ease-in-out infinite;
   cursor: default;
   user-select: none;
