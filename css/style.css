@@ -1471,3 +1471,42 @@ input[type="range"]::-webkit-slider-thumb:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, var(--light-teal), var(--primary-green));
 }
+
+/* Accessibility: Respect user's preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+
+  /* Remove transforms that happen on hover/focus/active to prevent jarring jumps */
+  .container:hover,
+  .logo:hover,
+  .hero-subtitle:hover,
+  .file-upload-container:hover,
+  .file-upload-btn:hover,
+  textarea:focus,
+  input[type="range"]:hover,
+  input[type="range"]::-webkit-slider-thumb:hover,
+  .generate-btn:hover,
+  .copy-btn:hover,
+  .chess-section:hover,
+  .chess-btn.primary:hover,
+  .chess-btn.secondary:hover,
+  #chessboard:hover,
+  .instruction-item:hover,
+  .chess-piece:hover,
+  .loader-container.hidden {
+    transform: none !important;
+  }
+}
