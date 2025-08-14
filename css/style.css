@@ -1575,25 +1575,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .generate-btn:hover::after{
   opacity:1; transform: scale(1);
 }
-/* 7) Remplacement de l’animation glow (box-shadow animé => cher) 
-      -> halo en pseudo-element animé en opacity/scale */
-.password-display{
-  position: relative;
-  box-shadow: var(--elev-soft);
-}
-.password-display::after{
-  content:"";
-  position:absolute; inset:-10px;
-  border-radius: 16px;
-  box-shadow: var(--ring-glow);  /* statique */
-  opacity:.6;
-  will-change: opacity, transform;
-  animation: halo 3s ease-in-out infinite;
-}
-@keyframes halo{
-  0%,100%{ opacity:.5; transform: scale(1); }
-  50%    { opacity:1;  transform: scale(1.02); }
-}
+
 
 /* 8) Loader : évite background-position animé, passe sur transform du contenu */
 .loader-container{
